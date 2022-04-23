@@ -1,4 +1,4 @@
-import { SearchRoutes, WelcomeScreen } from "./components";
+import { SearchRoutes } from "./components";
 
 function App() {
   return (

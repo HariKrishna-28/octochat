@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth, provider } from '../firebase';
@@ -59,7 +59,7 @@ const WelcomeScreen = () => {
                     </div>
                 }
             </div>
-            <p className='font-semibold p-5'
+            <div className='font-semibold p-5'
             >
                 {loading &&
                     <div className='flex flex-col justify-center items-center h-screen'>
@@ -67,9 +67,17 @@ const WelcomeScreen = () => {
                     </div>
                 }
                 {!user && "Please login to continue"}
-            </p>
+            </div>
 
-            {/* <p className='p-4 mt-1 text-center border- border-cyan-300'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime commodi voluptatem officiis qui laborum laudantium veniam perspiciatis pariatur nihil, enim harum voluptate amet repellendus dicta illo, ut dolores, excepturi illum.</p> */}
+            <div>
+                {error &&
+                    <h1>
+                        {error}
+                    </h1>
+                }
+            </div>
+
+            <p className='p-4 mt-1 text-center font-semibold'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime commodi voluptatem officiis qui laborum laudantium veniam perspiciatis pariatur nihil, enim harum voluptate amet repellendus dicta illo, ut dolores, excepturi illum.</p>
         </div>
     )
 }

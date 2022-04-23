@@ -7,7 +7,7 @@ import { auth, db } from '../firebase'
 import LoadScreen from './LoadScreen'
 import AddIcon from '@mui/icons-material/Add';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+// import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Channel from './Channel'
 
 const Home = () => {
@@ -94,6 +94,12 @@ const Home = () => {
                                     })
                             }
                         </div>
+                        {
+                            error &&
+                            <h1>
+                                {error}
+                            </h1>
+                        }
                     </div>
                 </div>
             </div>

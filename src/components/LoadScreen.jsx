@@ -2,11 +2,7 @@ import React from 'react'
 import { ScaleLoader } from 'react-spinners'
 
 const LoadScreen = () => {
-    return (
-        <div>
-            <ScaleLoader color={"#5865f2"} />
-        </div>
-    )
+    return (<ScaleLoader color={"#5865f2"} />)
 }
 
 export default LoadScreen
