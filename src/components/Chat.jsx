@@ -15,6 +15,7 @@ const Chat = () => {
     const inputRef = useRef("")
     const chatRef = useRef(null)
     const [user] = useAuthState(auth)
+    // eslint-disable-next-line
     const [messages, loading, error] = useCollection(
         channelId &&
         db
@@ -30,6 +31,7 @@ const Chat = () => {
             block: "start",
         })
     }
+
 
     const sendMessage = (event) => {
         event.preventDefault()
