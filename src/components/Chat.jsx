@@ -39,7 +39,7 @@ const Chat = () => {
                 timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
                 message: inputRef.current.value,
                 name: user?.displayName,
-                photoUrl: user?.photoURL,
+                photoURL: user?.photoURL,
                 email: user?.email,
             })
         } catch (error) {
@@ -66,6 +66,7 @@ const Chat = () => {
             <div className='flex-grow overflow-y-auto scrollbar-hide'>
                 {messages?.docs.map((doc) => {
                     return <Message
+                        key={doc.id}
                         email={doc.data().email}
                         message={doc.data().message}
                         timeStamp={doc.data().timeStamp}
