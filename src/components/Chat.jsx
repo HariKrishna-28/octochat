@@ -8,6 +8,9 @@ import LogOutButton from './LogOutButton';
 import { useCollection } from 'react-firebase-hooks/firestore'
 import firebase from "firebase/compat/app";
 import Message from './Message';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import { Tooltip } from '@mui/material';
+import Zoom from '@mui/material/Zoom';
 
 const Chat = () => {
     const channelId = useSelector(selectChannelId)
@@ -60,8 +63,20 @@ const Chat = () => {
                     <h4 className='text-white font-semibold'>{channelName}</h4>
                 </div>
 
-                <div className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2'>
-                    <LogOutButton />
+                <div className='flex items-center justify-center'>
+                    <div className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2'>
+                        <a href="https://github.com/HariKrishna-28/octochat" target="_blank" rel="noopener noreferrer">
+                            <Tooltip
+                                TransitionComponent={Zoom}
+                                TransitionProps={{ timeout: 400 }}
+                                title="Repository">
+                                <GitHubIcon />
+                            </Tooltip>
+                        </a>
+                    </div>
+                    <div className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2'>
+                        <LogOutButton />
+                    </div>
                 </div>
             </header>
 
