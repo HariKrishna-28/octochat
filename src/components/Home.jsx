@@ -106,7 +106,7 @@ const Home = () => {
                                     :
                                     channels?.docs.map((doc) => {
                                         return (
-                                            < Channel
+                                            <Channel
                                                 key={doc.id}
                                                 id={doc.id}
                                                 channelName={doc.data().channelName}
