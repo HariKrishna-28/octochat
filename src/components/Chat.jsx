@@ -26,7 +26,7 @@ const Chat = () => {
             .collection("channels")
             .doc(channelId)
             .collection("messages")
-        // .orderBy("timestamp", "asc")
+            .orderBy("timestamp", "asc")
     );
 
     const scrollToBottom = () => {

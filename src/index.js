@@ -6,19 +6,19 @@ import App from "./App";
 import { BrowserRouter, HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
-import { createBrowserHistory } from "history";
+// import { createBrowserHistory } from "history";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-const history = createBrowserHistory();
+// const history = createBrowserHistory();
 
 root.render(
   <React.StrictMode>
-    <HashRouter history={history}>
-      {/* <BrowserRouter history={history}> */}
+    {/* <HashRouter history={history}> */}
+    <BrowserRouter>
       <Provider store={store}>
         <App />
       </Provider>
-      {/* </BrowserRouter> */}
-    </HashRouter>
+    </BrowserRouter>
+    {/* </HashRouter> */}
   </React.StrictMode>
 );

@@ -33,7 +33,7 @@ const WelcomeScreen = () => {
     // }, [user])
 
     return (
-        <div>
+        <div className="bg-discord_welcomeBg text-white h-screen">
             <div className="flex items-center justify-between p-2">
                 <h1
                     className='font-bold text-xl lg:text-3xl text-center'>
@@ -43,7 +43,7 @@ const WelcomeScreen = () => {
                 {!loading &&
                     <div className='flex justify-between gap-5'>
                         <button
-                            className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
+                            className='bg-white hover:text-blue-700 font-semibold text-black hover:shadow-md py-2 px-4 b hover:border-transparent rounded'
                             onClick={(event) => !user ? signIn(event) : navigator("channels")}
                         >
                             {user ? "Go to channels" : "Login"}
