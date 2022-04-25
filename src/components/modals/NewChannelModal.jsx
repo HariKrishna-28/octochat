@@ -34,17 +34,19 @@ const NewChannelModal = ({ handleClose, open }) => {
 
     const generateId = () => {
         const unique_id = uuid();
-        return unique_id.slice(0, 8)
+        return unique_id.slice(0, 10)
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault()
         if (streamName === "" || imageUrl === "") return
         try {
-            await db.collection("stream").add({
+            db.collection("stream").add({
                 streamId: generateId(),
                 streamName: streamName,
-                owner: user?.uid,
+                ownerId: user?.uid,
+                ownerEmail: user?.email,
+                ownerName: user?.displayName,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             })
             handleClose()
