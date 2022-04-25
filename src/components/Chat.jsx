@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import TagIcon from '@mui/icons-material/Tag';
 import { selectChannelId, selectChannelName } from '../features/channelSlice';
 import { useSelector } from 'react-redux';
@@ -29,13 +29,17 @@ const Chat = () => {
             .orderBy("timeStamp", "asc")
     );
 
-    const scrollToBottom = () => {
-        chatRef.current.scrollIntoView({
-            behaviour: "smooth",
-            block: "start",
-        })
-    }
+    // const scrollToBottom = () => {
+    //     chatRef.current.scrollIntoView({
+    //         behaviour: "smooth",
+    //         block: "start",
+    //     })
+    // }
 
+    const MessageScroll = () => { //scrolls to the bottom of the div tag
+        const div = document.getElementById("message-box")
+        div.scrollTop = div.scrollHeight - div.clientHeight;
+    }
 
     const sendMessage = (event) => {
         event.preventDefault()
@@ -53,16 +57,22 @@ const Chat = () => {
         }
 
         inputRef.current.value = ""
-        scrollToBottom()
+        MessageScroll()
     }
+
+    const justifyHeader = !channelId ? "justify-end" : "justify-between"
+
+    useEffect(() => {
+        MessageScroll()
+    }, [messages])
 
     return (
         <div className='flex flex-col h-screen'>
-            <header className='flex items-center justify-between space-x-5 border-b border-gray-800 p-2'>
-                <div className='flex items-center space-x-1'>
+            <header className={`flex items-center ${justifyHeader} space-x-5 border-b border-gray-800 p-2`}>
+                {channelId && <div className='flex items-center space-x-1'>
                     <TagIcon className='h-6 text-discord_chatHeader' />
                     <h4 className='text-white font-semibold'>{channelName}</h4>
-                </div>
+                </div>}
 
                 <div className='flex items-center justify-center'>
                     <div className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2'>
@@ -75,18 +85,24 @@ const Chat = () => {
                             </Tooltip>
                         </a>
                     </div>
-                    <div className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2'>
+                    <div className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2 '>
                         <LogOutButton />
                     </div>
                 </div>
             </header>
 
-            <div className='flex-grow overflow-y-auto scrollbar-hide'>
+            <div className='flex-grow overflow-y-auto scrollbar-hide' id="message-box">
                 {
                     loading &&
                     <div className='flex flex-col items-center justify-center h-screen'>
                         <LoadScreen />
                     </div>
+                }
+                {!channelId &&
+                    <div className='flex flex-col items-center justify-center h-screen -mt-10 text-discord_chatINputText'>
+                        <h1 className='text-xl font-bold'>Alone? Choose a room and start chatting</h1>
+                    </div>
+
                 }
                 {messages?.docs.map((doc) => {
                     return <Message
@@ -99,6 +115,7 @@ const Chat = () => {
                     />
                 })}
                 <div
+                    id='message-box'
                     ref={chatRef}
                     className='pb-16' />
             </div>

@@ -33,17 +33,17 @@ const WelcomeScreen = () => {
     // }, [user])
 
     return (
-        <div className="bg-discord_welcomeBg text-white h-screen">
+        <div className="bg-discord_channelsBg text-discord_chatINputText h-screen">
             <div className="flex items-center justify-between p-2">
                 <h1
                     className='font-bold text-xl lg:text-3xl text-center'>
-                    Welcome to Octochat
+                    Octochat
                 </h1>
 
                 {!loading &&
                     <div className='flex justify-between gap-5'>
                         <button
-                            className='bg-white hover:text-blue-700 font-semibold text-black hover:shadow-md py-2 px-4 b hover:border-transparent rounded'
+                            className='bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded'
                             onClick={(event) => !user ? signIn(event) : navigator("channels")}
                         >
                             {user ? "Go to channels" : "Login"}
@@ -51,7 +51,7 @@ const WelcomeScreen = () => {
 
                         {user &&
                             <button
-                                className='bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded'
+                                className='bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded'
                                 onClick={(event) => signOut(event)}
                             >
                                 Sign Out
@@ -77,7 +77,15 @@ const WelcomeScreen = () => {
                 }
             </div>
 
-            <p className='p-4 mt-1 text-center font-semibold'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime commodi voluptatem officiis qui laborum laudantium veniam perspiciatis pariatur nihil, enim harum voluptate amet repellendus dicta illo, ut dolores, excepturi illum.</p>
+            <div className="flex flex-col gap-7 items-center justify-center mt-10 p-4">
+                <h1 className="text-3xl lg:text-5xl font-bold">Your place to talk</h1>
+                <h2 className=" text-xl lg:text:lg font-light tracking-wide lg:max-w-3xl w-full">
+                    Whether you’re part of a school club, gaming group, worldwide art
+                    community, or just a handful of friends that want to spend time
+                    together, OctoChat makes it easy to talk every day and hang out more
+                    often.
+                </h2>
+            </div>
         </div>
     )
 }
