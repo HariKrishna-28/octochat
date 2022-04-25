@@ -11,6 +11,7 @@ import Message from './Message';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { Tooltip } from '@mui/material';
 import Zoom from '@mui/material/Zoom';
+import LoadScreen from './LoadScreen';
 
 const Chat = () => {
     const channelId = useSelector(selectChannelId)
@@ -81,6 +82,12 @@ const Chat = () => {
             </header>
 
             <div className='flex-grow overflow-y-auto scrollbar-hide'>
+                {
+                    loading &&
+                    <div className='flex flex-col items-center justify-center h-screen'>
+                        <LoadScreen />
+                    </div>
+                }
                 {messages?.docs.map((doc) => {
                     return <Message
                         key={doc.id}
