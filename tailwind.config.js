@@ -20,6 +20,7 @@ module.exports = {
         discord_chatInputBg: "#40444b",
         discord_chatINputText: "#dcddde",
         discord_messageBg: "#32353b",
+        discord_deleteBg: "#ed4245",
       },
     },
   },

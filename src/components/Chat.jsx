@@ -91,7 +91,9 @@ const Chat = () => {
                 </div>
             </header>
 
-            <div className='flex-grow overflow-y-auto scrollbar-hide' id="message-box">
+            <div
+                id='message-box'
+                className='flex-grow overflow-y-auto scrollbar-hide'>
                 {
                     loading &&
                     <div className='flex flex-col items-center justify-center h-screen'>
@@ -107,6 +109,7 @@ const Chat = () => {
                 {messages?.docs.map((doc) => {
                     return <Message
                         key={doc.id}
+                        id={doc.id}
                         email={doc.data().email}
                         message={doc.data().message}
                         timeStamp={doc.data().timeStamp}
@@ -115,7 +118,6 @@ const Chat = () => {
                     />
                 })}
                 <div
-                    id='message-box'
                     ref={chatRef}
                     className='pb-16' />
             </div>
