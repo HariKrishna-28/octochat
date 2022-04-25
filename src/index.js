@@ -13,12 +13,12 @@ const history = createBrowserHistory();
 
 root.render(
   <React.StrictMode>
-    {/* <HashRouter history={history}> */}
-    <BrowserRouter history={history}>
+    <HashRouter history={history}>
+      {/* <BrowserRouter history={history}> */}
       <Provider store={store}>
         <App />
       </Provider>
-    </BrowserRouter>
-    {/* </HashRouter> */}
+      {/* </BrowserRouter> */}
+    </HashRouter>
   </React.StrictMode>
 );
