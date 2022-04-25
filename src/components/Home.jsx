@@ -12,6 +12,7 @@ import Channel from './Channel'
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Tooltip } from '@mui/material';
 // import Fade from '@mui/material/Fade';
+import firebase from "firebase/compat/app";
 import Zoom from '@mui/material/Zoom';
 import Chat from './Chat';
 
@@ -26,6 +27,7 @@ const Home = () => {
             try {
                 await db.collection("channels").add({
                     channelName: channelName,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 })
             } catch (err) {
                 console.log(err)
