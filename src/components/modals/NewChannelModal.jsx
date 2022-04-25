@@ -8,6 +8,7 @@ import { auth, db } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import firebase from "firebase/compat/app";
 import { useCollection } from 'react-firebase-hooks/firestore';
+import { v4 as uuid } from 'uuid';
 
 // import { FormControl, Switch, FormControlLabel } from '@mui/material';
 
@@ -31,22 +32,29 @@ const NewChannelModal = ({ handleClose, open }) => {
     const [streamData, loading, error] = useCollection(db.collection("stream"))
     // const [customImageFlag, setCustomImageFlag] = useState(false)
 
+    const generateId = () => {
+        const unique_id = uuid();
+        return unique_id.slice(0, 8)
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault()
         if (streamName === "" || imageUrl === "") return
-        // try {
-        //     await db.collection("stream").add({
-        //         streamName: streamName,
-        //         owner: user?.uid,
-        //         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        //     })
-        //     await db.collection("streamData").add({
-        //         streamName:streamName,
+        try {
+            await db.collection("stream").add({
+                streamId: generateId(),
+                streamName: streamName,
+                owner: user?.uid,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            })
+            handleClose()
+            // await db.collection("streamData").add({
+            //     streamName:streamName,
 
-        //     })
-        // } catch (error) {
-        //     console.log(error)
-        // }
+            // })
+        } catch (error) {
+            console.log(error)
+        }
 
     }
 
