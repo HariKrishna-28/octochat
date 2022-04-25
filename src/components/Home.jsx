@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ServerIcon from './ServerIcon'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollection } from 'react-firebase-hooks/firestore';
@@ -15,11 +15,16 @@ import { Tooltip } from '@mui/material';
 import firebase from "firebase/compat/app";
 import Zoom from '@mui/material/Zoom';
 import Chat from './Chat';
+import NewChannelModal from './modals/NewChannelModal';
 
 const Home = () => {
     const [user] = useAuthState(auth)
+    const [open, setOpen] = useState(false)
     const [channels, loading, error] = useCollection(db.collection("channels"))
     const navigate = useNavigate()
+
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const handleAddChannel = async () => {
         const channelName = prompt("Enter a channel name")
@@ -64,6 +69,7 @@ const Home = () => {
 
                     <div className='text-center cursor-pointer'>
                         <AddIcon
+                            onClick={handleOpen}
                             style={{ fontSize: '30' }}
                             className='bg-discord_serverBg rounded-full text-discord_purple hover:rounded-md hover:text-discord_green' />
                     </div>
@@ -150,6 +156,7 @@ const Home = () => {
                     </div>
                 </div>
 
+                <NewChannelModal open={open} handleClose={handleClose} />
                 {/* Chat */}
                 <div className='bg-discord_serverBg flex-grow'>
                     <Chat />
