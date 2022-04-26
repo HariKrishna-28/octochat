@@ -139,18 +139,20 @@ const Home = () => {
                                 className='font-semibold'>
                                 Channels
                             </h4>
-                            <div className='ml-auto  cursor-pointer hover:bg-discord_channelHoverBg rounded-md justify-end'>
-                                <Tooltip
-                                    TransitionComponent={Zoom}
-                                    TransitionProps={{ timeout: 400 }}
-                                    title="Create a channel"
-                                >
-                                    <AddIcon
-                                        className='h-6 hover:text-white'
-                                        onClick={() => setOpenChannelModal(true)}
-                                    />
-                                </Tooltip>
-                            </div>
+                            {streamName &&
+                                <div className='ml-auto  cursor-pointer hover:bg-discord_channelHoverBg rounded-md justify-end'>
+                                    <Tooltip
+                                        TransitionComponent={Zoom}
+                                        TransitionProps={{ timeout: 400 }}
+                                        title="Create a channel"
+                                    >
+                                        <AddIcon
+                                            className='h-6 hover:text-white'
+                                            onClick={() => setOpenChannelModal(true)}
+                                        />
+                                    </Tooltip>
+                                </div>
+                            }
                         </div>
 
                         <div
@@ -210,9 +212,18 @@ const Home = () => {
                     </div>
                 </div>
 
-                <NewStreamModal open={openStreamModal} handleClose={() => setOpenStreamModal(false)} />
+                <NewStreamModal
+                    open={openStreamModal}
+                    handleClose={() => setOpenStreamModal(false)}
+                />
                 {/* Chat */}
-                <NewChannelModal handleAddChannel={(channelName) => handleAddChannel(channelName)} open={openChannelModal} handleClose={() => setOpenChannelModal(false)} />
+
+                <NewChannelModal
+                    handleAddChannel={(channelName) => handleAddChannel(channelName)}
+                    open={openChannelModal}
+                    handleClose={() => setOpenChannelModal(false)}
+                />
+
                 <div className='bg-discord_serverBg flex-grow'>
                     <Chat />
                 </div>
