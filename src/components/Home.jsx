@@ -15,19 +15,20 @@ import { Tooltip } from '@mui/material';
 import firebase from "firebase/compat/app";
 import Zoom from '@mui/material/Zoom';
 import Chat from './Chat';
+import NewStreamModal from './modals/NewStreamModal';
 import NewChannelModal from './modals/NewChannelModal';
 
 const Home = () => {
     const [user] = useAuthState(auth)
-    const [open, setOpen] = useState(false)
+    const [openStreamModal, setOpenStreamModal] = useState(false)
+    const [openChannelModal, setOpenChannelModal] = useState(false)
     const [channels, loading, error] = useCollection(db.collection("channels"))
     const navigate = useNavigate()
 
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    // const handleOpen = () => setOpen(true);
+    // const handleClose = () => setOpen(false);
 
-    const handleAddChannel = async () => {
-        const channelName = prompt("Enter a channel name")
+    const handleAddChannel = async (channelName) => {
         if (channelName) {
             try {
                 await db.collection("channels").add({
@@ -69,7 +70,7 @@ const Home = () => {
 
                     <div className='text-center cursor-pointer'>
                         <AddIcon
-                            onClick={handleOpen}
+                            onClick={() => setOpenStreamModal(true)}
                             style={{ fontSize: '30' }}
                             className='bg-discord_serverBg rounded-full text-discord_purple hover:rounded-md hover:text-discord_green' />
                     </div>
@@ -98,7 +99,7 @@ const Home = () => {
                                 >
                                     <AddIcon
                                         className='h-6 hover:text-white'
-                                        onClick={handleAddChannel}
+                                        onClick={() => setOpenChannelModal(true)}
                                     />
                                 </Tooltip>
                             </div>
@@ -156,8 +157,9 @@ const Home = () => {
                     </div>
                 </div>
 
-                <NewChannelModal open={open} handleClose={handleClose} />
+                <NewStreamModal open={openStreamModal} handleClose={() => setOpenStreamModal(false)} />
                 {/* Chat */}
+                <NewChannelModal handleAddChannel={(channelName) => handleAddChannel(channelName)} open={openChannelModal} handleClose={() => setOpenChannelModal(false)} />
                 <div className='bg-discord_serverBg flex-grow'>
                     <Chat />
                 </div>

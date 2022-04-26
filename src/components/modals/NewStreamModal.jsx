@@ -25,22 +25,39 @@ const style = {
     p: 3,
 };
 
-const NewChannelModal = ({ handleClose, open, handleAddChannel }) => {
-    const [channelName, setChannelName] = useState("")
-    // const [imageUrl, setImageUrl] = useState("")
-    // const [user] = useAuthState(auth)
+const NewStreamModal = ({ handleClose, open }) => {
+    const [streamName, setStreamName] = useState("")
+    const [imageUrl, setImageUrl] = useState("")
+    const [user] = useAuthState(auth)
     // const [streamData, loading, error] = useCollection(db.collection("stream"))
     // const [customImageFlag, setCustomImageFlag] = useState(false)
 
-    // const generateId = () => {
-    //     const unique_id = uuid();
-    //     return unique_id.slice(0, 10)
-    // }
+    const generateId = () => {
+        const unique_id = uuid();
+        return unique_id.slice(0, 10)
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        handleAddChannel(channelName)
-        handleClose()
+        if (streamName === "" || imageUrl === "") return
+        try {
+            db.collection("stream").add({
+                streamId: generateId(),
+                streamName: streamName,
+                ownerId: user?.uid,
+                ownerEmail: user?.email,
+                ownerName: user?.displayName,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            })
+            handleClose()
+            // await db.collection("streamData").add({
+            //     streamName:streamName,
+
+            // })
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 
     return (
@@ -56,7 +73,7 @@ const NewChannelModal = ({ handleClose, open, handleAddChannel }) => {
             >
                 <div className='flex items-center justify-between p-3'>
                     <div className='text-2xl font-bold'>
-                        New Channel
+                        New Stream
                     </div>
                     <button
                         className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2'
@@ -68,21 +85,39 @@ const NewChannelModal = ({ handleClose, open, handleAddChannel }) => {
 
                 <div>
                     <form
-                        className='h-28'
+                        className='h-36'
                         onSubmit={(e) => handleSubmit(e)}>
                         <div className='flex flex-col gap-2 text-center mt-2 mb-2'>
                             <input
                                 type="text"
                                 required
-                                placeholder='Enter the name of the channel'
-                                onChange={(e) => setChannelName(e.target.value)}
+                                placeholder='Enter the name of the stream'
+                                onChange={(e) => setStreamName(e.target.value)}
                                 className='bg-discord_chatInputBg p-3 rounded focus:outline-none text-discord_chatINputText lg:max-w-xl w-full placeholder:divide-discord_chatINputText text-sm'
                             />
+
+                            <input
+                                type="text"
+                                required
+                                placeholder='Enter logo url'
+                                onChange={(e) => setImageUrl(e.target.value)}
+                                className='bg-discord_chatInputBg p-3 rounded focus:outline-none text-discord_chatINputText lg:max-w-xl w-full placeholder:divide-discord_chatINputText text-sm'
+                            />
+
+                            {/* <div className='flex items-center gap-2 justify-center'>
+                                <div className='text-xl font-semibold'>
+                                    Choose a random avatar
+                                </div>
+                                <Switch
+                                    checked={customImageFlag}
+                                    onChange={(event, value) => setCustomImageFlag(value)}
+                                />
+                            </div> */}
 
                         </div>
 
                         <div className='text-center'>
-                            {channelName !== "" &&
+                            {streamName !== "" && imageUrl !== "" &&
                                 <button
                                     className='bg-discord_serverBg hover:bg-discord_purple text-white p-2 rounded hover:rounded-md font-semibold'
                                     type='submit '>
@@ -98,4 +133,4 @@ const NewChannelModal = ({ handleClose, open, handleAddChannel }) => {
     )
 }
 
-export default NewChannelModal
+export default NewStreamModal
