@@ -28,21 +28,23 @@ const style = {
 const NewStreamModal = ({ handleClose, open }) => {
     const [streamName, setStreamName] = useState("")
     const [imageUrl, setImageUrl] = useState("")
+    const [streamId, setStreamId] = useState("")
     const [user] = useAuthState(auth)
     // const [streamData, loading, error] = useCollection(db.collection("stream"))
     // const [customImageFlag, setCustomImageFlag] = useState(false)
 
     const generateId = () => {
         const unique_id = uuid();
-        return unique_id.slice(0, 10)
+        setStreamId(unique_id.slice(0, 10))
     }
 
     const handleSubmit = (event) => {
         event.preventDefault()
+        generateId()
         if (streamName === "" || imageUrl === "") return
         try {
-            db.collection("stream").add({
-                streamId: generateId(),
+            db.collection("streams").add({
+                streamId: streamId,
                 streamName: streamName,
                 ownerId: user?.uid,
                 ownerEmail: user?.email,

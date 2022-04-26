@@ -16,7 +16,7 @@ const WelcomeScreen = () => {
         event.preventDefault()
         await auth.signInWithPopup(provider)
             .then(() => {
-                navigator("channels")
+                navigator("streams")
             })
             .catch((err) => {
                 alert(err.message)
@@ -44,9 +44,9 @@ const WelcomeScreen = () => {
                     <div className='flex justify-between gap-5'>
                         <button
                             className='bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded'
-                            onClick={(event) => !user ? signIn(event) : navigator("channels")}
+                            onClick={(event) => !user ? signIn(event) : navigator("streams")}
                         >
-                            {user ? "Go to channels" : "Login"}
+                            {user ? "Go to Streams" : "Login"}
                         </button>
 
                         {user &&
@@ -66,7 +66,6 @@ const WelcomeScreen = () => {
                         <LoadScreen />
                     </div>
                 }
-                {!user && "Please login to continue"}
             </div>
 
             <div>

@@ -23,6 +23,7 @@ const Home = () => {
     const [openStreamModal, setOpenStreamModal] = useState(false)
     const [openChannelModal, setOpenChannelModal] = useState(false)
     const [channels, loading, error] = useCollection(db.collection("channels"))
+    const [stream, streamLoad, streamErr] = useCollection(db.collection("streams"))
     const navigate = useNavigate()
 
     // const handleOpen = () => setOpen(true);
@@ -63,10 +64,26 @@ const Home = () => {
                         </Link>
                     </div>
                     <hr className='border-gray-700 border w-8 mx-auto' />
+                    {
+                        streamLoad ?
+                            <div className='flex flex-col justify-center items-center h-screen'>
+                                <LoadScreen />
+                            </div>
+                            : stream?.docs.map((doc) => {
+                                return (
+                                    <ServerIcon
+                                        image="https://mui.com/static/branding/companies/nasa-dark.svg/"
+                                        id={doc.id}
+                                        key={doc.id}
+                                        name={doc.data().streamName}
+                                    />
+                                )
+                            })
+                    }
+                    {/* <ServerIcon image="https://mui.com/static/branding/companies/nasa-dark.svg" />
                     <ServerIcon image="https://mui.com/static/branding/companies/nasa-dark.svg" />
                     <ServerIcon image="https://mui.com/static/branding/companies/nasa-dark.svg" />
-                    <ServerIcon image="https://mui.com/static/branding/companies/nasa-dark.svg" />
-                    <ServerIcon image="https://mui.com/static/branding/companies/nasa-dark.svg" />
+                    <ServerIcon image="https://mui.com/static/branding/companies/nasa-dark.svg" /> */}
 
                     <div className='text-center cursor-pointer'>
                         <AddIcon
