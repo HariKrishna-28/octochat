@@ -1,16 +1,8 @@
 import React, { useState } from 'react'
 import Box from '@mui/material/Box';
-// import Button from '@mui/material/Button';
-// import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
-import { auth, db } from '../../firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import firebase from "firebase/compat/app";
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { v4 as uuid } from 'uuid';
 
-// import { FormControl, Switch, FormControlLabel } from '@mui/material';
 
 const style = {
     position: 'absolute',
@@ -19,7 +11,6 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: 600,
     bgcolor: '#202225',
-    // border: '2px solid #000',
     boxShadow: 24,
     borderRadius: 3,
     p: 3,
@@ -27,15 +18,6 @@ const style = {
 
 const NewChannelModal = ({ handleClose, open, handleAddChannel }) => {
     const [channelName, setChannelName] = useState("")
-    // const [imageUrl, setImageUrl] = useState("")
-    // const [user] = useAuthState(auth)
-    // const [streamData, loading, error] = useCollection(db.collection("stream"))
-    // const [customImageFlag, setCustomImageFlag] = useState(false)
-
-    // const generateId = () => {
-    //     const unique_id = uuid();
-    //     return unique_id.slice(0, 10)
-    // }
 
     const handleSubmit = (event) => {
         event.preventDefault()
