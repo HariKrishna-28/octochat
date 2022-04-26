@@ -120,8 +120,16 @@ const Home = () => {
                 <div className='bg-discord_channelsBg flex flex-col min-w-max'>
                     <h2
                         className='flex text-white font-bold text-sm items-center justify-between border-b border-gray-800 p-4 hover:bg-discord_serverNameHoverBg cursor-pointer'>
-                        {streamName}
-                        <KeyboardArrowDownIcon />
+                        {streamName ?
+                            <>
+                                {streamName}
+                                <KeyboardArrowDownIcon />
+                            </>
+                            :
+                            <div>
+                                Choose a stream
+                            </div>
+                        }
                     </h2>
                     <div className='text-discord_channel flex-grow overflow-y-scroll scrollbar-hide'>
                         <div className='flex items-center p-2 mb-2'>
