@@ -21,8 +21,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectStreamId, selectStreamName, setStreamInfo } from '../features/streamSlice';
 import HomeIcon from '@mui/icons-material/Home';
 import { setChannelInfo } from '../features/channelSlice';
-import StreamInfo from './StreamInfo';
-import StreamSettings from './StreamSettings';
 
 
 const Home = () => {

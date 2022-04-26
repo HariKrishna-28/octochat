@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Tooltip, Zoom } from '@mui/material';
 import PeopleIcon from '@mui/icons-material/People';
 import DeleteIcon from '@mui/icons-material/Delete';
+import StreamDeleteModal from './modals/StreamDeleteModal';
 
 const StreamSettings = () => {
     const [showPrompt, setShowPrompt] = useState(false)
@@ -10,7 +11,6 @@ const StreamSettings = () => {
             <div className='flex items-center gap-1 justify-center'>
                 <div className='text-discord_channel hover:text-white p-1 cursor-pointer hover:bg-discord_channelHoverBg rounded-md'>
                     <Tooltip
-                        placement="top"
                         TransitionComponent={Zoom}
                         TransitionProps={{ timeout: 400 }}
                         title="Add people"
@@ -20,9 +20,12 @@ const StreamSettings = () => {
                         />
                     </Tooltip>
                 </div>
-                <div className='text-discord_channel hover:text-white p-1 cursor-pointer hover:bg-discord_channelHoverBg rounded-md'>
+
+
+                <div
+                    onClick={() => setShowPrompt(true)}
+                    className='text-discord_channel hover:text-white p-1 cursor-pointer hover:bg-discord_channelHoverBg rounded-md'>
                     <Tooltip
-                        placement="top"
                         TransitionComponent={Zoom}
                         TransitionProps={{ timeout: 400 }}
                         title="Delete Stream"
@@ -34,6 +37,11 @@ const StreamSettings = () => {
                     </Tooltip>
                 </div>
             </div>
+
+            <StreamDeleteModal
+                open={showPrompt}
+                handleClose={() => setShowPrompt(false)}
+            />
         </>
     )
 }
