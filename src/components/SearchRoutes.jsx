@@ -9,8 +9,9 @@ const SearchRoutes = () => {
         <>
             <Routes>
                 <Route path="/" element={<WelcomeScreen />} />
-                <Route path="channels" element={<Home />} />
-                <Route path="channels/:id" element={<Home />} />
+                <Route path="streams" element={<Home />} />
+                <Route path="streams/:id" element={<Home />} />
+                {/* <Route path="streams/:id/channels/:id" element={<Home />} /> */}
                 <Route path="*" element={<Navigate replace to="/" />} />
             </Routes>
         </>

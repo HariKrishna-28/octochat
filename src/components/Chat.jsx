@@ -102,7 +102,7 @@ const Chat = () => {
                 }
                 {!channelId &&
                     <div className='flex flex-col items-center justify-center h-screen -mt-10 text-discord_chatINputText'>
-                        <h1 className='text-xl font-bold'>Alone? Choose a room and start chatting</h1>
+                        <h1 className='text-xl font-bold'>Choose a channel and start chatting</h1>
                     </div>
 
                 }
