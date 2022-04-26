@@ -27,6 +27,7 @@ const ServerIcon = ({ image, id, name }) => {
             // className={id === streamId && " bg-discord_serversBg"}
             onClick={() => setStream()}>
             <Tooltip
+                placement="left"
                 TransitionComponent={Zoom}
                 TransitionProps={{ timeout: 400 }}
                 title={name}>

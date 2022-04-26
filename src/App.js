@@ -2,7 +2,9 @@ import { SearchRoutes } from "./components";
 
 function App() {
   return (
-    <div>
+    <div
+    // className="select-none"
+    >
       <SearchRoutes />
       {/* <WelcomeScreen /> */}
     </div>

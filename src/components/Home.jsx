@@ -84,9 +84,16 @@ const Home = () => {
                 >
                     <Link to="/" onClick={cleanSlate}>
                         <div className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2 text-center'>
-                            <HomeIcon
-                                className='h-6 hover:text-white'
-                            />
+                            <Tooltip
+                                placement="left"
+                                TransitionComponent={Zoom}
+                                TransitionProps={{ timeout: 400 }}
+                                title="Home"
+                            >
+                                <HomeIcon
+                                    className='h-6 hover:text-white'
+                                />
+                            </Tooltip>
                         </div>
                     </Link>
                     <hr className='border-gray-700 border w-8 mx-auto' />
@@ -109,10 +116,17 @@ const Home = () => {
 
 
                     <div className='text-center cursor-pointer'>
-                        <AddIcon
-                            onClick={() => setOpenStreamModal(true)}
-                            style={{ fontSize: '30' }}
-                            className='bg-discord_serverBg rounded-full text-discord_purple hover:rounded-md hover:text-discord_green' />
+                        <Tooltip
+                            placement="left"
+                            TransitionComponent={Zoom}
+                            TransitionProps={{ timeout: 400 }}
+                            title="New Stream"
+                        >
+                            <AddIcon
+                                onClick={() => setOpenStreamModal(true)}
+                                style={{ fontSize: '30' }}
+                                className='bg-discord_serverBg rounded-full text-discord_purple hover:rounded-md hover:text-discord_green' />
+                        </Tooltip>
                     </div>
                 </div>
 
@@ -144,7 +158,7 @@ const Home = () => {
                                     <Tooltip
                                         TransitionComponent={Zoom}
                                         TransitionProps={{ timeout: 400 }}
-                                        title="Create a channel"
+                                        title="New Channel"
                                     >
                                         <AddIcon
                                             className='h-6 hover:text-white'
