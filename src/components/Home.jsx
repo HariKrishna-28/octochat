@@ -17,13 +17,25 @@ import Zoom from '@mui/material/Zoom';
 import Chat from './Chat';
 import NewStreamModal from './modals/NewStreamModal';
 import NewChannelModal from './modals/NewChannelModal';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectStreamId, selectStreamName, setStreamInfo } from '../features/streamSlice';
+import HomeIcon from '@mui/icons-material/Home';
+import { setChannelInfo } from '../features/channelSlice';
 
 const Home = () => {
     const [user] = useAuthState(auth)
     const [openStreamModal, setOpenStreamModal] = useState(false)
     const [openChannelModal, setOpenChannelModal] = useState(false)
-    const [channels, loading, error] = useCollection(db.collection("channels"))
+    const streamId = useSelector(selectStreamId)
+    const streamName = useSelector(selectStreamName)
+    const dispatch = useDispatch()
     const [stream, streamLoad, streamErr] = useCollection(db.collection("streams"))
+    const [channels, loading, error] = useCollection(
+        streamId &&
+        db.collection("streams")
+            .doc(streamId)
+            .collection("channels")
+    )
     const navigate = useNavigate()
 
     // const handleOpen = () => setOpen(true);
@@ -32,7 +44,7 @@ const Home = () => {
     const handleAddChannel = async (channelName) => {
         if (channelName) {
             try {
-                await db.collection("channels").add({
+                await db.collection("streams").doc(streamId).collection("channels").add({
                     channelName: channelName,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 })
@@ -47,6 +59,17 @@ const Home = () => {
         await auth.signOut()
     }
 
+    const cleanSlate = () => {
+        dispatch(setStreamInfo({
+            streamId: null,
+            streamName: null,
+        }))
+        dispatch(setChannelInfo({
+            channelId: null,
+            channelName: null,
+        }))
+    }
+
     useEffect(() => {
         !user && navigate('/')
         // eslint-disable-next-line
@@ -57,12 +80,15 @@ const Home = () => {
         <>
             <div className='flex h-screen'>
                 {/* Servers */}
-                <div className='flex flex-col space-y-3 bg-discord_serversBg p-1 min-w-max'>
-                    <div className='hover:bg-discord_purple hover:rounded flex justify-center p-2'>
-                        <Link to="/">
-                            <img draggable="false" src="https://mui.com/static/branding/companies/nasa-dark.svg" alt="check" />
-                        </Link>
-                    </div>
+                <div className='flex flex-col space-y-3 bg-discord_serversBg p-1 min-w-max'
+                >
+                    <Link to="/" onClick={cleanSlate}>
+                        <div className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2 text-center'>
+                            <HomeIcon
+                                className='h-6 hover:text-white'
+                            />
+                        </div>
+                    </Link>
                     <hr className='border-gray-700 border w-8 mx-auto' />
                     {
                         streamLoad ?
@@ -72,7 +98,7 @@ const Home = () => {
                             : stream?.docs.map((doc) => {
                                 return (
                                     <ServerIcon
-                                        image="https://mui.com/static/branding/companies/nasa-dark.svg/"
+                                        image={doc.data()?.streamDisplayImage}
                                         id={doc.id}
                                         key={doc.id}
                                         name={doc.data().streamName}
@@ -80,10 +106,7 @@ const Home = () => {
                                 )
                             })
                     }
-                    {/* <ServerIcon image="https://mui.com/static/branding/companies/nasa-dark.svg" />
-                    <ServerIcon image="https://mui.com/static/branding/companies/nasa-dark.svg" />
-                    <ServerIcon image="https://mui.com/static/branding/companies/nasa-dark.svg" />
-                    <ServerIcon image="https://mui.com/static/branding/companies/nasa-dark.svg" /> */}
+
 
                     <div className='text-center cursor-pointer'>
                         <AddIcon
@@ -97,7 +120,7 @@ const Home = () => {
                 <div className='bg-discord_channelsBg flex flex-col min-w-max'>
                     <h2
                         className='flex text-white font-bold text-sm items-center justify-between border-b border-gray-800 p-4 hover:bg-discord_serverNameHoverBg cursor-pointer'>
-                        Official server...
+                        {streamName}
                         <KeyboardArrowDownIcon />
                     </h2>
                     <div className='text-discord_channel flex-grow overflow-y-scroll scrollbar-hide'>
@@ -125,26 +148,31 @@ const Home = () => {
                         <div
                             className='flex flex-col space-y-2 px-2 mb-4'>
                             {
-                                loading ?
-                                    <div className='flex flex-col justify-center items-center h-screen'>
-                                        <LoadScreen />
+                                !streamId ?
+                                    <div>
+                                        Choose a room
                                     </div>
                                     :
-                                    channels?.docs.map((doc) => {
-                                        return (
-                                            <Channel
-                                                key={doc.id}
-                                                id={doc.id}
-                                                channelName={doc.data().channelName}
-                                            />
-                                        )
-                                    })
+                                    loading ?
+                                        <div className='flex flex-col justify-center items-center h-screen'>
+                                            <LoadScreen />
+                                        </div>
+                                        :
+                                        channels?.docs.map((doc) => {
+                                            return (
+                                                <Channel
+                                                    key={doc.id}
+                                                    id={doc.id}
+                                                    channelName={doc.data().channelName}
+                                                />
+                                            )
+                                        })
                             }
                         </div>
                         {
-                            error &&
-                            <h1>
-                                {error}
+                            (error || streamErr) &&
+                            <h1 className='text-2xl font-bold'>
+                                Something has gone wrong please try again later
                             </h1>
                         }
                     </div>

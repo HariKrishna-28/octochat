@@ -1,16 +1,11 @@
 import React, { useState } from 'react'
 import Box from '@mui/material/Box';
-// import Button from '@mui/material/Button';
-// import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import { auth, db } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import firebase from "firebase/compat/app";
-import { useCollection } from 'react-firebase-hooks/firestore';
 import { v4 as uuid } from 'uuid';
-
-// import { FormControl, Switch, FormControlLabel } from '@mui/material';
 
 const style = {
     position: 'absolute',
@@ -25,37 +20,35 @@ const style = {
     p: 3,
 };
 
+const avatarOptions = ["avataaars", "bottts", "identicon", "initials", "adventurer"]
+
 const NewStreamModal = ({ handleClose, open }) => {
     const [streamName, setStreamName] = useState("")
-    const [imageUrl, setImageUrl] = useState("")
     const [streamId, setStreamId] = useState("")
     const [user] = useAuthState(auth)
-    // const [streamData, loading, error] = useCollection(db.collection("stream"))
-    // const [customImageFlag, setCustomImageFlag] = useState(false)
 
     const generateId = () => {
         const unique_id = uuid();
         setStreamId(unique_id.slice(0, 10))
     }
 
+
     const handleSubmit = (event) => {
         event.preventDefault()
         generateId()
-        if (streamName === "" || imageUrl === "") return
+        const avatar = avatarOptions[Math.floor(Math.random() * avatarOptions.length)]
+        if (streamName === "") return
         try {
             db.collection("streams").add({
                 streamId: streamId,
                 streamName: streamName,
+                streamDisplayImage: `https://avatars.dicebear.com/api/${avatar}/${streamName}.svg`,
                 ownerId: user?.uid,
                 ownerEmail: user?.email,
                 ownerName: user?.displayName,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             })
             handleClose()
-            // await db.collection("streamData").add({
-            //     streamName:streamName,
-
-            // })
         } catch (error) {
             console.log(error)
         }
@@ -87,7 +80,7 @@ const NewStreamModal = ({ handleClose, open }) => {
 
                 <div>
                     <form
-                        className='h-36'
+                        className='h-28'
                         onSubmit={(e) => handleSubmit(e)}>
                         <div className='flex flex-col gap-2 text-center mt-2 mb-2'>
                             <input
@@ -97,29 +90,10 @@ const NewStreamModal = ({ handleClose, open }) => {
                                 onChange={(e) => setStreamName(e.target.value)}
                                 className='bg-discord_chatInputBg p-3 rounded focus:outline-none text-discord_chatINputText lg:max-w-xl w-full placeholder:divide-discord_chatINputText text-sm'
                             />
-
-                            <input
-                                type="text"
-                                required
-                                placeholder='Enter logo url'
-                                onChange={(e) => setImageUrl(e.target.value)}
-                                className='bg-discord_chatInputBg p-3 rounded focus:outline-none text-discord_chatINputText lg:max-w-xl w-full placeholder:divide-discord_chatINputText text-sm'
-                            />
-
-                            {/* <div className='flex items-center gap-2 justify-center'>
-                                <div className='text-xl font-semibold'>
-                                    Choose a random avatar
-                                </div>
-                                <Switch
-                                    checked={customImageFlag}
-                                    onChange={(event, value) => setCustomImageFlag(value)}
-                                />
-                            </div> */}
-
                         </div>
 
                         <div className='text-center'>
-                            {streamName !== "" && imageUrl !== "" &&
+                            {streamName !== "" &&
                                 <button
                                     className='bg-discord_serverBg hover:bg-discord_purple text-white p-2 rounded hover:rounded-md font-semibold'
                                     type='submit '>

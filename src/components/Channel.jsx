@@ -1,15 +1,17 @@
 import React from 'react'
 import TagIcon from '@mui/icons-material/Tag';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { setChannelInfo } from '../features/channelSlice'
 import { selectChannelId } from '../features/channelSlice';
 import { useSelector } from 'react-redux';
+// import { selectStreamId } from '../features/streamSlice';
 
 const Channel = ({ id, channelName }) => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const dispatch = useDispatch()
     const channelId = useSelector(selectChannelId)
+    // const streamId = useSelector(selectStreamId)
 
 
     const setChannel = () => {
@@ -18,7 +20,8 @@ const Channel = ({ id, channelName }) => {
             channelName: channelName,
         }))
 
-        navigate(`/channels/${id}`)
+        // navigate(`streams/${streamId}/channels/${id}`)
+        // console.log(`streams/${streamId}/channels/${id}`)
     }
 
     return (

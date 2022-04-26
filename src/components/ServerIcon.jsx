@@ -1,26 +1,31 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'
-import { selectStreamId, setStreamInfo } from '../features/streamSlice';
+import { useDispatch } from 'react-redux'
+import { setStreamInfo } from '../features/streamSlice';
 import { Tooltip, Zoom } from '@mui/material';
+import { setChannelInfo } from '../features/channelSlice';
 
 const ServerIcon = ({ image, id, name }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const streamId = useSelector(selectStreamId)
+    // const streamId = useSelector(selectStreamId)
 
     const setStream = () => {
         dispatch(setStreamInfo({
             streamId: id,
             streamName: name,
         }))
-
+        dispatch(setChannelInfo({
+            channelId: null,
+            channelName: null,
+        }))
         navigate(`/streams/${id}`)
     }
 
-
     return (
-        <div onClick={() => setStream()}>
+        <div
+            // className={id === streamId && " bg-discord_serversBg"}
+            onClick={() => setStream()}>
             <Tooltip
                 TransitionComponent={Zoom}
                 TransitionProps={{ timeout: 400 }}
