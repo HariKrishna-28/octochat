@@ -21,6 +21,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectStreamId, selectStreamName, setStreamInfo } from '../features/streamSlice';
 import HomeIcon from '@mui/icons-material/Home';
 import { setChannelInfo } from '../features/channelSlice';
+import StreamInfo from './StreamInfo';
+import StreamSettings from './StreamSettings';
+
 
 const Home = () => {
     const [user] = useAuthState(auth)
@@ -130,14 +133,13 @@ const Home = () => {
                     </div>
                 </div>
 
-                {/* Rooms */}
+                {/* Stream */}
                 <div className='bg-discord_channelsBg flex flex-col min-w-max'>
                     <h2
                         className='flex text-white font-bold text-sm items-center justify-between border-b border-gray-800 p-4 hover:bg-discord_serverNameHoverBg cursor-pointer'>
                         {streamName ?
                             <>
                                 {streamName}
-                                <KeyboardArrowDownIcon />
                             </>
                             :
                             <div>
@@ -145,6 +147,7 @@ const Home = () => {
                             </div>
                         }
                     </h2>
+
                     <div className='text-discord_channel flex-grow overflow-y-scroll scrollbar-hide'>
                         <div className='flex items-center p-2 mb-2'>
                             <KeyboardArrowDownIcon
@@ -200,6 +203,8 @@ const Home = () => {
                             </h1>
                         }
                     </div>
+
+                    {/* user stats section */}
                     <div className='bg-discord_userSectionBg p-2 flex justify-between items-center space-x-8'>
                         <div className='flex gap-2 justify-between items-center'>
                             <img src={user?.photoURL} alt="user" className='h-10 rounded-full' draggable="false" />
