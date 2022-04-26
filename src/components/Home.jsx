@@ -83,18 +83,18 @@ const Home = () => {
                 <div className='flex flex-col space-y-3 bg-discord_serversBg p-1 min-w-max'
                 >
                     <Link to="/" onClick={cleanSlate}>
-                        <div className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2 text-center'>
-                            <Tooltip
-                                placement="left"
-                                TransitionComponent={Zoom}
-                                TransitionProps={{ timeout: 400 }}
-                                title="Home"
-                            >
+                        <Tooltip
+                            placement="left"
+                            TransitionComponent={Zoom}
+                            TransitionProps={{ timeout: 400 }}
+                            title="Home"
+                        >
+                            <div className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2 text-center'>
                                 <HomeIcon
                                     className='h-6 hover:text-white'
                                 />
-                            </Tooltip>
-                        </div>
+                            </div>
+                        </Tooltip>
                     </Link>
                     <hr className='border-gray-700 border w-8 mx-auto' />
                     {
