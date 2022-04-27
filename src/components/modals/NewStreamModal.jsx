@@ -53,8 +53,9 @@ const NewStreamModal = ({ handleClose, open }) => {
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             }
             db.collection("streams").add(schema)
-            // setFlag(true)
-            // db.collection("streams").where("streamId" == id).collection("stream-participants").add
+            // db.collection("stream-participants").collection(user?.uid).doc(id).add({
+            //     streamId: id,
+            // })
             handleClose()
         } catch (error) {
             console.log(error)

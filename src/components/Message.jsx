@@ -38,7 +38,7 @@ const Message = ({ id, message, timeStamp, name, email, photoURL }) => {
                     onClick={() => {
                         try {
                             db
-                                .collection("channels")
+                                .collection("streams")
                                 .doc(channelId)
                                 .collection("messages")
                                 .doc(id)

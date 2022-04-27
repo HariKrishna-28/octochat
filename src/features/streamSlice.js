@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   streamId: null,
   streamName: null,
+  innerStreamId: null,
 };
 
 export const streamSlice = createSlice({
@@ -12,6 +13,7 @@ export const streamSlice = createSlice({
     setStreamInfo: (state, action) => {
       state.streamId = action.payload.streamId;
       state.streamName = action.payload.streamName;
+      state.innerStreamId = action.payload.innerStreamId;
     },
   },
 });
@@ -20,5 +22,6 @@ export const { setStreamInfo } = streamSlice.actions;
 
 export const selectStreamId = (state) => state.stream.streamId;
 export const selectStreamName = (state) => state.stream.streamName;
+export const selectInnerStreamId = (state) => state.stream.innerStreamId;
 
 export default streamSlice.reducer;

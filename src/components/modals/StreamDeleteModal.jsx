@@ -26,6 +26,7 @@ const StreamDeleteModal = ({ handleClose, open }) => {
     const deleteStream = () => {
         try {
             db.collection("streams").doc(streamId).delete()
+            // db.collection("stream-participants").doc(user?.uid).collection("streams").delete()
             handleClose()
         } catch (error) {
             console.log(error)

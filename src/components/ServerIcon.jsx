@@ -5,7 +5,7 @@ import { setStreamInfo } from '../features/streamSlice';
 import { Tooltip, Zoom } from '@mui/material';
 import { setChannelInfo } from '../features/channelSlice';
 
-const ServerIcon = ({ image, id, name }) => {
+const ServerIcon = ({ image, id, name, innerId }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     // const streamId = useSelector(selectStreamId)
@@ -14,6 +14,7 @@ const ServerIcon = ({ image, id, name }) => {
         dispatch(setStreamInfo({
             streamId: id,
             streamName: name,
+            innerStreamId: innerId,
         }))
         dispatch(setChannelInfo({
             channelId: null,

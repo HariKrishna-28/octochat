@@ -4,7 +4,7 @@ import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import { useSelector } from 'react-redux';
 import { db } from '../../firebase';
-import { selectStreamId, selectStreamName } from '../../features/streamSlice';
+import { selectStreamId, selectStreamName, selectInnerStreamId } from '../../features/streamSlice';
 
 
 const style = {
@@ -24,10 +24,18 @@ const AddPeopleModal = ({ handleClose, open }) => {
     const [participants, setParticipants] = useState("")
     const streamId = useSelector(selectStreamId)
     const streamName = useSelector(selectStreamName)
+    const innerStreamId = useSelector(selectInnerStreamId)
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        // const participantsData = participants.split(",")
+        const participantsData = participants.split(",")
+        participantsData.map((id) => {
+            return (
+                db.collection("stream-participants").doc(id).collection("streams").add({
+                    streamId: innerStreamId,
+                })
+            )
+        })
         // db.collection("stream-participants").add({
         //     streamId:streamId,
         //     streamNameL:

@@ -64,6 +64,7 @@ const Home = () => {
         dispatch(setStreamInfo({
             streamId: null,
             streamName: null,
+            innerStreamId: null,
         }))
         dispatch(setChannelInfo({
             channelId: null,
@@ -106,6 +107,7 @@ const Home = () => {
                             : stream?.docs.map((doc) => {
                                 return (
                                     <ServerIcon
+                                        innerId={doc.data()?.streamId}
                                         image={doc.data()?.streamDisplayImage}
                                         id={doc.id}
                                         key={doc.id}

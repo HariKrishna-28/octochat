@@ -28,7 +28,7 @@ const Chat = () => {
     const [messages, loading, error] = useCollection(
         channelId &&
         db
-            .collection("channels")
+            .collection("streams")
             .doc(channelId)
             .collection("messages")
             .orderBy("timeStamp", "asc")
@@ -50,7 +50,7 @@ const Chat = () => {
         event.preventDefault()
         if (inputRef.current.value === "") return
         try {
-            db.collection("channels").doc(channelId).collection("messages").add({
+            db.collection("streams").doc(channelId).collection("messages").add({
                 timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
                 message: inputRef.current.value,
                 name: user?.displayName,
