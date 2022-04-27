@@ -21,17 +21,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectStreamId, selectStreamName, setStreamInfo } from '../features/streamSlice';
 import HomeIcon from '@mui/icons-material/Home';
 import { setChannelInfo } from '../features/channelSlice';
-import { setUserInfo } from '../features/userSlice';
+import { selectUserEmail, setUserInfo } from '../features/userSlice';
+import Streams from './Streams';
 
 
 const Home = () => {
-    const [user] = useAuthState(auth)
+    const [user, userLoading] = useAuthState(auth)
+    const userEmail = useSelector(selectUserEmail)
     const [openStreamModal, setOpenStreamModal] = useState(false)
     const [openChannelModal, setOpenChannelModal] = useState(false)
     const streamId = useSelector(selectStreamId)
     const streamName = useSelector(selectStreamName)
     const dispatch = useDispatch()
+    const [userData] = useCollection(user && db.collection("users"))
     const [stream, streamLoad, streamErr] = useCollection(db.collection("streams"))
+    const [streamSubscriptionData, subLoad] = useCollection(user && db.collection("users"))
     const [channels, loading, error] = useCollection(
         streamId &&
         db.collection("streams")
@@ -74,14 +78,29 @@ const Home = () => {
     }
 
     useEffect(() => {
-        !user && navigate('/')
+        if (loading)
+            return
         dispatch(setUserInfo({
             userName: user?.displayName,
             userImage: user?.photoURL,
             userEmail: user?.email,
             userId: user?.uid,
         }))
+
+        console.log(user)
+        user && userData?.docs.map((doc) => {
+            if (doc.id === user?.email || doc.id === userEmail) {
+                return
+            }
+        })
+        db.collection("users").doc(user?.email).set({
+            subscribedStreams: [],
+        })
         // eslint-disable-next-line
+    }, [])
+
+    useEffect(() => {
+        !user && navigate('/')
     }, [user])
 
 
@@ -106,17 +125,29 @@ const Home = () => {
                         </Tooltip>
                     </Link>
                     <hr className='border-gray-700 border w-8 mx-auto' />
+
+                    {/* <ServerIcon /> */}
                     {
                         streamLoad ?
                             <div className='flex flex-col justify-center items-center h-screen'>
                                 <LoadScreen />
                             </div>
                             :
-                            <ServerIcon />
+                            streamSubscriptionData?.docs.map((doc) => {
+                                if (doc.id === user?.email || doc.id === userEmail) {
+                                    const data = doc.data().subscribedStreams
+                                    return (
+                                        <h1>{data}</h1>
+                                    )
+                                    // data.map((stream, id) => {
+                                    //     return (<h1>{stream}</h1>)
+                                    // })
+                                }
+                            })
+
                         // stream?.docs.map((doc) => {
                         //     return (
                         //         <ServerIcon
-                        //             innerId={doc.data()?.streamId}
                         //             image={doc.data()?.streamDisplayImage}
                         //             id={doc.id}
                         //             key={doc.id}

@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setUserInfo } from '../features/userSlice';
+import { selectUserEmail, setUserInfo } from '../features/userSlice';
 import { auth, db, provider } from '../firebase';
 import LoadScreen from './LoadScreen';
 
 const WelcomeScreen = () => {
     const [user, loading, error] = useAuthState(auth)
-    const [userData] = useCollection(user?.uid && db.collection("users").doc(user?.email))
+    const [userData] = useCollection(user?.email && db.collection("users").doc(user.email))
     const navigate = useNavigate()
+    const userEmail = useSelector(selectUserEmail)
     // const dispatch = useDispatch()
 
     const navigator = (path) => {
@@ -34,12 +35,12 @@ const WelcomeScreen = () => {
     }
 
 
-    useEffect(() => {
-        userData !== undefined &&
-            db.collection("users").doc(user.email).set({
-                subscribedStreams: [],
-            })
-    }, [user])
+    // useEffect(() => {
+    //     user && userData === undefined &&
+    //         db.collection("users").doc(user.email).set({
+    //             subscribedStreams: [],
+    //         })
+    // }, [user])
 
     return (
         <div className="bg-discord_channelsBg text-discord_chatINputText h-screen">
