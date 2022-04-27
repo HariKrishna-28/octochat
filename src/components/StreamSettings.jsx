@@ -25,7 +25,7 @@ const StreamSettings = () => {
                 </div>
 
 
-                <div
+                {/* <div
                     onClick={() => setShowPrompt(true)}
                     className='text-discord_channel hover:text-white p-1 cursor-pointer hover:bg-discord_channelHoverBg rounded-md'>
                     <Tooltip
@@ -38,7 +38,7 @@ const StreamSettings = () => {
                         />
 
                     </Tooltip>
-                </div>
+                </div> */}
             </div>
 
             <StreamDeleteModal
