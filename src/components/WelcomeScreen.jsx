@@ -1,11 +1,13 @@
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useCollection } from 'react-firebase-hooks/firestore';
 import { useNavigate } from 'react-router-dom';
 import { auth, db, provider } from '../firebase';
 import LoadScreen from './LoadScreen';
 
 const WelcomeScreen = () => {
     const [user, loading, error] = useAuthState(auth)
+    const [userData] = useCollection(user?.uid && db.collection("user").doc(user?.uid))
     const navigate = useNavigate()
 
     const navigator = (path) => {
@@ -16,9 +18,11 @@ const WelcomeScreen = () => {
         event.preventDefault()
         await auth.signInWithPopup(provider)
             .then(() => {
-                // db.collection("users").doc(user?.uid).add({
-                //     subscribedStreams: [],
-                // })
+                !userData && (
+                    db.collection("users").doc(user?.uid).add({
+                        subscribedStreams: [],
+                    })
+                )
                 navigator("streams")
             })
             .catch((err) => {

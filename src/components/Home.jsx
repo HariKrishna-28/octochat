@@ -104,7 +104,9 @@ const Home = () => {
                             <div className='flex flex-col justify-center items-center h-screen'>
                                 <LoadScreen />
                             </div>
-                            : stream?.docs.map((doc) => {
+                            :
+                            // <ServerIcon />
+                            stream?.docs.map((doc) => {
                                 return (
                                     <ServerIcon
                                         innerId={doc.data()?.streamId}

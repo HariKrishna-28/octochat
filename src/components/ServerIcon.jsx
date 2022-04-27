@@ -4,11 +4,16 @@ import { useDispatch } from 'react-redux'
 import { setStreamInfo } from '../features/streamSlice';
 import { Tooltip, Zoom } from '@mui/material';
 import { setChannelInfo } from '../features/channelSlice';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { db, auth } from '../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 const ServerIcon = ({ image, id, name, innerId }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const [user] = useAuthState(auth)
     // const streamId = useSelector(selectStreamId)
+    const [streamSubscriptionData] = useCollection(db.collection("users").doc(user?.id))
 
     const setStream = () => {
         dispatch(setStreamInfo({

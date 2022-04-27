@@ -95,11 +95,17 @@ const AddPeopleModal = ({ handleClose, open }) => {
 
                         <div className='text-center'>
                             {participants !== "" &&
-                                <button
-                                    className='hover:bg-discord_serverBg bg-discord_purple text-white p-2 rounded hover:rounded-md font-semibold'
-                                    type='submit '>
-                                    Add participants
-                                </button>}
+                                <>
+                                    <button
+                                        className='hover:bg-discord_serverBg bg-discord_purple text-white p-2 rounded hover:rounded-md font-semibold'
+                                        type='submit '>
+                                        Add participants
+                                    </button>
+                                    <div className='text-center p-2 font-light text-sm mt-2'>
+                                        Please note that a user should at least have one stream
+                                    </div>
+                                </>
+                            }
                         </div>
 
                     </form>

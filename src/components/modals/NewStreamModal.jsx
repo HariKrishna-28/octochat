@@ -53,11 +53,13 @@ const NewStreamModal = ({ handleClose, open }) => {
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             }
             const userSchema = {
-                subscribedStreams: [id],
+                streamData: [id],
             }
 
             db.collection("streams").add(schema)
-            db.collection("users").doc(user?.uid).add(userSchema)
+            // db.collection("users").doc(user?.uid).update({
+            //     subscribedStreams: firebase.firestore.FieldValue.arrayUnion(id)
+            // })
             handleClose()
 
         } catch (error) {
