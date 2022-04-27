@@ -21,6 +21,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectStreamId, selectStreamName, setStreamInfo } from '../features/streamSlice';
 import HomeIcon from '@mui/icons-material/Home';
 import { setChannelInfo } from '../features/channelSlice';
+import { setUserInfo } from '../features/userSlice';
 
 
 const Home = () => {
@@ -74,6 +75,12 @@ const Home = () => {
 
     useEffect(() => {
         !user && navigate('/')
+        dispatch(setUserInfo({
+            userName: user.displayName,
+            userImage: user.photoURL,
+            userEmail: user.email,
+            userId: user.uid,
+        }))
         // eslint-disable-next-line
     }, [user])
 

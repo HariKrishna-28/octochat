@@ -57,7 +57,7 @@ const NewStreamModal = ({ handleClose, open }) => {
             }
 
             db.collection("streams").add(schema)
-            db.collection("users").doc(user?.uid).update({
+            db.collection("users").doc(user.email).update({
                 subscribedStreams: firebase.firestore.FieldValue.arrayUnion(id)
             })
             handleClose()

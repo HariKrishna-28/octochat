@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { setStreamInfo } from '../features/streamSlice';
@@ -12,8 +12,9 @@ const ServerIcon = ({ image, id, name, innerId }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [user] = useAuthState(auth)
+    const [streamData, setStreamData] = useState({})
     // const streamId = useSelector(selectStreamId)
-    const [streamSubscriptionData] = useCollection(db.collection("users").doc(user?.id))
+    // const [streamSubscriptionData, loading] = useCollection(db.collection("users").doc(user.email))
 
     const setStream = () => {
         dispatch(setStreamInfo({
@@ -27,6 +28,13 @@ const ServerIcon = ({ image, id, name, innerId }) => {
         }))
         navigate(`/streams/${id}`)
     }
+
+    // useEffect(() => {
+    //     streamSubscriptionData.docs((doc) => {
+    //         console.log(doc.data())
+    //     })
+
+    // }, [streamSubscriptionData])
 
     return (
         <div
