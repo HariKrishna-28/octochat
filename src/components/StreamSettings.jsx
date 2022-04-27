@@ -3,13 +3,16 @@ import { Tooltip, Zoom } from '@mui/material';
 import PeopleIcon from '@mui/icons-material/People';
 import DeleteIcon from '@mui/icons-material/Delete';
 import StreamDeleteModal from './modals/StreamDeleteModal';
+import AddPeopleModal from './modals/AddPeopleModal';
 
 const StreamSettings = () => {
     const [showPrompt, setShowPrompt] = useState(false)
+    const [showInfo, setShowInfo] = useState(false)
+
     return (
         <>
             <div className='flex items-center gap-1 justify-center'>
-                <div className='text-discord_channel hover:text-white p-1 cursor-pointer hover:bg-discord_channelHoverBg rounded-md'>
+                <div onClick={() => setShowInfo(true)} className='text-discord_channel hover:text-white p-1 cursor-pointer hover:bg-discord_channelHoverBg rounded-md'>
                     <Tooltip
                         TransitionComponent={Zoom}
                         TransitionProps={{ timeout: 400 }}
@@ -41,6 +44,10 @@ const StreamSettings = () => {
             <StreamDeleteModal
                 open={showPrompt}
                 handleClose={() => setShowPrompt(false)}
+            />
+            <AddPeopleModal
+                open={showInfo}
+                handleClose={() => setShowInfo(false)}
             />
         </>
     )

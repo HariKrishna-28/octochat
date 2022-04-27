@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
+import { useSelector } from 'react-redux';
+import { db } from '../../firebase';
+import { selectStreamId, selectStreamName } from '../../features/streamSlice';
 
 
 const style = {
@@ -16,19 +19,26 @@ const style = {
     p: 3,
 };
 
-const NewChannelModal = ({ handleClose, open, handleAddChannel }) => {
-    const [channelName, setChannelName] = useState("")
+const AddPeopleModal = ({ handleClose, open }) => {
+    // const [channelName, setChannelName] = useState("")
+    const [participants, setParticipants] = useState("")
+    const streamId = useSelector(selectStreamId)
+    const streamName = useSelector(selectStreamName)
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        handleAddChannel(channelName)
+        // const participantsData = participants.split(",")
+        // db.collection("stream-participants").add({
+        //     streamId:streamId,
+        //     streamNameL:
+        // })
         handleClose()
     }
 
     return (
         <Modal
             open={open}
-            onClose={handleClose}
+            onClose={() => handleClose()}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
@@ -38,17 +48,24 @@ const NewChannelModal = ({ handleClose, open, handleAddChannel }) => {
             >
                 <div className='flex items-center justify-between p-3'>
                     <div className='text-2xl font-bold'>
-                        New Channel
+                        Add People
                     </div>
                     <button
                         className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2'
-                        onClick={handleClose}
+                        onClick={() => handleClose()}
                     >
                         <CloseIcon className='h-4' />
                     </button>
                 </div>
 
                 <div>
+                    <div className='p-4 text-md font-light text-center'>
+                        Enter the id's of members to add them to
+                        <span className='mx-1 text-discord_purple font-bold'>
+                            {streamName}
+                        </span>
+                        separated by commas
+                    </div>
                     <form
                         className='h-28'
                         onSubmit={(e) => handleSubmit(e)}>
@@ -57,19 +74,19 @@ const NewChannelModal = ({ handleClose, open, handleAddChannel }) => {
                                 type="text"
                                 autoFocus
                                 required
-                                placeholder='Enter the name of the channel'
-                                onChange={(e) => setChannelName(e.target.value)}
+                                placeholder='Participants id separated by commas'
+                                onChange={(e) => setParticipants(e.target.value)}
                                 className='bg-discord_chatInputBg p-3 rounded focus:outline-none text-discord_chatINputText lg:max-w-xl w-full placeholder:divide-discord_chatINputText text-sm'
                             />
 
                         </div>
 
                         <div className='text-center'>
-                            {channelName !== "" &&
+                            {participants !== "" &&
                                 <button
                                     className='hover:bg-discord_serverBg bg-discord_purple text-white p-2 rounded hover:rounded-md font-semibold'
                                     type='submit '>
-                                    Crerate
+                                    Add participants
                                 </button>}
                         </div>
 
@@ -81,4 +98,4 @@ const NewChannelModal = ({ handleClose, open, handleAddChannel }) => {
     )
 }
 
-export default NewChannelModal
+export default AddPeopleModal
