@@ -7,6 +7,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import firebase from "firebase/compat/app";
 import { v4 as uuid } from 'uuid';
 import { useCollection } from 'react-firebase-hooks/firestore';
+import { useSelector } from 'react-redux';
+import { selectUserEmail } from '../../features/userSlice';
 
 const style = {
     position: 'absolute',
@@ -27,6 +29,7 @@ const NewStreamModal = ({ handleClose, open }) => {
     const [streamName, setStreamName] = useState("")
     const [streamId, setStreamId] = useState("")
     const [user] = useAuthState(auth)
+    const userEmail = useSelector(selectUserEmail)
     // const [flag, setFlag] = useState(false)
     // const [streams] = useCollection(flag &&
     //     db.collection("streams"))
@@ -57,7 +60,7 @@ const NewStreamModal = ({ handleClose, open }) => {
             }
 
             db.collection("streams").add(schema)
-            db.collection("users").doc(user.email).update({
+            db.collection("users").doc(user.email || userEmail).update({
                 subscribedStreams: firebase.firestore.FieldValue.arrayUnion(id)
             })
             handleClose()

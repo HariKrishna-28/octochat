@@ -35,7 +35,7 @@ const WelcomeScreen = () => {
 
 
     useEffect(() => {
-        user?.email !== undefined &&
+        userData !== undefined &&
             db.collection("users").doc(user.email).set({
                 subscribedStreams: [],
             })

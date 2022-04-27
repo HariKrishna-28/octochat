@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { Tooltip, Zoom } from '@mui/material';
 import PeopleIcon from '@mui/icons-material/People';
-import DeleteIcon from '@mui/icons-material/Delete';
+// import DeleteIcon from '@mui/icons-material/Delete';
 import StreamDeleteModal from './modals/StreamDeleteModal';
 import AddPeopleModal from './modals/AddPeopleModal';
+import { useSelector } from 'react-redux';
+// import { selectUserEmail } from '../features/userSlice';
 
 const StreamSettings = () => {
     const [showPrompt, setShowPrompt] = useState(false)
     const [showInfo, setShowInfo] = useState(false)
+    // const userEmail = useSelector(selectUserEmail)
 
     return (
         <>

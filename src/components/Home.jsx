@@ -76,10 +76,10 @@ const Home = () => {
     useEffect(() => {
         !user && navigate('/')
         dispatch(setUserInfo({
-            userName: user.displayName,
-            userImage: user.photoURL,
-            userEmail: user.email,
-            userId: user.uid,
+            userName: user?.displayName,
+            userImage: user?.photoURL,
+            userEmail: user?.email,
+            userId: user?.uid,
         }))
         // eslint-disable-next-line
     }, [user])
@@ -112,18 +112,18 @@ const Home = () => {
                                 <LoadScreen />
                             </div>
                             :
-                            // <ServerIcon />
-                            stream?.docs.map((doc) => {
-                                return (
-                                    <ServerIcon
-                                        innerId={doc.data()?.streamId}
-                                        image={doc.data()?.streamDisplayImage}
-                                        id={doc.id}
-                                        key={doc.id}
-                                        name={doc.data().streamName}
-                                    />
-                                )
-                            })
+                            <ServerIcon />
+                        // stream?.docs.map((doc) => {
+                        //     return (
+                        //         <ServerIcon
+                        //             innerId={doc.data()?.streamId}
+                        //             image={doc.data()?.streamDisplayImage}
+                        //             id={doc.id}
+                        //             key={doc.id}
+                        //             name={doc.data().streamName}
+                        //         />
+                        //     )
+                        // })
                     }
 
 
