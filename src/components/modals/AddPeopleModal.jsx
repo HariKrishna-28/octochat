@@ -4,6 +4,8 @@ import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import { useSelector } from 'react-redux';
 import { db } from '../../firebase';
+import firebase from "firebase/compat/app";
+
 import { selectStreamId, selectStreamName, selectInnerStreamId } from '../../features/streamSlice';
 
 
@@ -30,11 +32,13 @@ const AddPeopleModal = ({ handleClose, open }) => {
         event.preventDefault()
         const participantsData = participants.split(",")
         participantsData.map((id) => {
-            return (
-                db.collection("stream-participants").doc(id).collection("streams").add({
-                    streamId: innerStreamId,
+            try {
+                db.collection("users").doc(id).update({
+                    subscribedStreams: firebase.firestore.FieldValue.arrayUnion(innerStreamId)
                 })
-            )
+            } catch (err) {
+                console.log(err)
+            }
         })
         // db.collection("stream-participants").add({
         //     streamId:streamId,

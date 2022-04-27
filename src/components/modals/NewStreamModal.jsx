@@ -52,11 +52,14 @@ const NewStreamModal = ({ handleClose, open }) => {
                 ownerName: user?.displayName,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             }
+            const userSchema = {
+                subscribedStreams: [id],
+            }
+
             db.collection("streams").add(schema)
-            // db.collection("stream-participants").collection(user?.uid).doc(id).add({
-            //     streamId: id,
-            // })
+            db.collection("users").doc(user?.uid).add(userSchema)
             handleClose()
+
         } catch (error) {
             console.log(error)
         }

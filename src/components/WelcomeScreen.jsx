@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
-import { auth, provider } from '../firebase';
+import { auth, db, provider } from '../firebase';
 import LoadScreen from './LoadScreen';
 
 const WelcomeScreen = () => {
@@ -16,6 +16,9 @@ const WelcomeScreen = () => {
         event.preventDefault()
         await auth.signInWithPopup(provider)
             .then(() => {
+                // db.collection("users").doc(user?.uid).add({
+                //     subscribedStreams: [],
+                // })
                 navigator("streams")
             })
             .catch((err) => {
