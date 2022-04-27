@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +7,7 @@ import LoadScreen from './LoadScreen';
 
 const WelcomeScreen = () => {
     const [user, loading, error] = useAuthState(auth)
-    const [userData] = useCollection(user?.uid && db.collection("user").doc(user?.uid))
+    const [userData] = useCollection(user?.uid && db.collection("users").doc(user?.email))
     const navigate = useNavigate()
 
     const navigator = (path) => {
@@ -18,11 +18,11 @@ const WelcomeScreen = () => {
         event.preventDefault()
         await auth.signInWithPopup(provider)
             .then(() => {
-                !userData && (
-                    db.collection("users").doc(user?.uid).add({
-                        subscribedStreams: [],
-                    })
-                )
+                // !userData && (
+                //     db.collection("users").doc(user.email).set({
+                //         subscribedStreams: [],
+                //     })
+                // )
                 navigator("streams")
             })
             .catch((err) => {
@@ -35,9 +35,12 @@ const WelcomeScreen = () => {
         await auth.signOut()
     }
 
-    // useEffect(() => {
-    //     user && navigator("channels")
-    // }, [user])
+    useEffect(() => {
+        user?.email !== undefined &&
+            db.collection("users").doc(user.email).set({
+                subscribedStreams: [],
+            })
+    }, [user])
 
     return (
         <div className="bg-discord_channelsBg text-discord_chatINputText h-screen">
