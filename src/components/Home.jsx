@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import ServerIcon from './ServerIcon'
+// import ServerIcon from './ServerIcon'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useNavigate, Link } from 'react-router-dom'
@@ -26,7 +26,7 @@ import Streams from './Streams';
 
 
 const Home = () => {
-    const [user, userLoading] = useAuthState(auth)
+    const [user, userLoad] = useAuthState(auth)
     const userEmail = useSelector(selectUserEmail)
     const [openStreamModal, setOpenStreamModal] = useState(false)
     const [openChannelModal, setOpenChannelModal] = useState(false)
@@ -34,8 +34,8 @@ const Home = () => {
     const streamName = useSelector(selectStreamName)
     const dispatch = useDispatch()
     const [userData] = useCollection(user && db.collection("users"))
-    const [stream, streamLoad, streamErr] = useCollection(db.collection("streams"))
-    const [streamSubscriptionData, subLoad] = useCollection(user && db.collection("users"))
+    // const [streamLoad, streamErr] = useCollection(db.collection("streams"))
+    const [streamSubscriptionData, streamSubLoad, streamErr] = useCollection(user && db.collection("users"))
     const [channels, loading, error] = useCollection(
         streamId &&
         db.collection("streams")
@@ -87,20 +87,24 @@ const Home = () => {
             userId: user?.uid,
         }))
 
-        console.log(user)
-        user && userData?.docs.map((doc) => {
-            if (doc.id === user?.email || doc.id === userEmail) {
-                return
-            }
-        })
+        !userLoad &&
+            // eslint-disable-next-line
+            user && userData?.docs.map((doc) => {
+                if (doc.id === user?.email || doc.id === userEmail) {
+                    // eslint-disable-next-line
+                    return
+                }
+            })
         db.collection("users").doc(user?.email).set({
             subscribedStreams: [],
         })
         // eslint-disable-next-line
     }, [])
 
+
     useEffect(() => {
         !user && navigate('/')
+        // eslint-disable-next-line
     }, [user])
 
 
@@ -128,11 +132,12 @@ const Home = () => {
 
                     {/* <ServerIcon /> */}
                     {
-                        streamLoad ?
+                        streamSubLoad ?
                             <div className='flex flex-col justify-center items-center h-screen'>
                                 <LoadScreen />
                             </div>
                             :
+                            // eslint-disable-next-line
                             streamSubscriptionData?.docs.map((doc) => {
                                 if (doc.id === user?.email || doc.id === userEmail) {
                                     const data = doc.data().subscribedStreams

@@ -1,6 +1,6 @@
 import React from 'react'
-import { useCollection } from 'react-firebase-hooks/firestore'
-import { db } from '../firebase'
+// import { useCollection } from 'react-firebase-hooks/firestore'
+// import { db } from '../firebase'
 import IndividualStreams from './IndividualStreams'
 
 const Streams = ({ data }) => {

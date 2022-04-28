@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useCollection } from 'react-firebase-hooks/firestore';
+// import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { selectUserEmail, setUserInfo } from '../features/userSlice';
-import { auth, db, provider } from '../firebase';
+// import { selectUserEmail } from '../features/userSlice';
+import { auth, provider } from '../firebase';
 import LoadScreen from './LoadScreen';
 
 const WelcomeScreen = () => {
     const [user, loading, error] = useAuthState(auth)
-    const [userData] = useCollection(user?.email && db.collection("users").doc(user.email))
+    // const [userData] = useCollection(user?.email && db.collection("users").doc(user.email))
     const navigate = useNavigate()
-    const userEmail = useSelector(selectUserEmail)
+    // const userEmail = useSelector(selectUserEmail)
     // const dispatch = useDispatch()
 
     const navigator = (path) => {

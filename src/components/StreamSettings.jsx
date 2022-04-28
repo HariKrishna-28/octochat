@@ -23,7 +23,7 @@ const StreamSettings = () => {
     return (
         <>
             <div className='flex items-center gap-1 justify-center'>
-                {userEmail === ownerEmail || user?.email === ownerEmail &&
+                {(userEmail === ownerEmail || user?.email === ownerEmail) &&
                     <>
                         <div onClick={() => setShowInfo(true)} className='text-discord_channel hover:text-white p-1 cursor-pointer hover:bg-discord_channelHoverBg rounded-md'>
                             <Tooltip

@@ -36,6 +36,7 @@ const IndividualStreams = ({ id }) => {
 
     useEffect(() => {
         setLoad(true)
+        // eslint-disable-next-line
         streamName?.docs.map(doc => {
             if (doc.data().streamId === id) {
                 const d = doc.data()
@@ -45,10 +46,13 @@ const IndividualStreams = ({ id }) => {
                 setOwnerEmail(d.ownerEmail)
                 setDisplayImage(d.streamDisplayImage)
                 setPresentFlag(true)
+                setLoad(false)
+                // eslint-disable-next-line
                 return
             }
         })
         setLoad(false)
+        // eslint-disable-next-line
     }, [streamName])
 
 

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { db } from '../../firebase';
 import firebase from "firebase/compat/app";
 
-import { selectStreamId, selectStreamName, selectInnerStreamId } from '../../features/streamSlice';
+import { selectStreamName, selectInnerStreamId } from '../../features/streamSlice';
 
 
 const style = {
@@ -24,13 +24,14 @@ const style = {
 const AddPeopleModal = ({ handleClose, open }) => {
     // const [channelName, setChannelName] = useState("")
     const [participants, setParticipants] = useState("")
-    const streamId = useSelector(selectStreamId)
+    // const streamId = useSelector(selectStreamId)
     const streamName = useSelector(selectStreamName)
     const innerStreamId = useSelector(selectInnerStreamId)
 
     const handleSubmit = (event) => {
         event.preventDefault()
         const participantsData = participants.split(",")
+        // eslint-disable-next-line
         participantsData.map((id) => {
             try {
                 db.collection("users").doc(id).update({
