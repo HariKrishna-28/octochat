@@ -6,7 +6,7 @@ import { auth, db } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import firebase from "firebase/compat/app";
 import { v4 as uuid } from 'uuid';
-import { useCollection } from 'react-firebase-hooks/firestore';
+// import { useCollection } from 'react-firebase-hooks/firestore';
 import { useSelector } from 'react-redux';
 import { selectUserEmail } from '../../features/userSlice';
 
@@ -27,6 +27,7 @@ const avatarOptions = ["avataaars", "bottts", "identicon", "initials", "adventur
 
 const NewStreamModal = ({ handleClose, open }) => {
     const [streamName, setStreamName] = useState("")
+    // eslint-disable-next-line
     const [streamId, setStreamId] = useState("")
     const [user] = useAuthState(auth)
     const userEmail = useSelector(selectUserEmail)
@@ -34,6 +35,7 @@ const NewStreamModal = ({ handleClose, open }) => {
     // const [streams] = useCollection(flag &&
     //     db.collection("streams"))
 
+    // eslint-disable-next-line
     const generateId = () => {
         const unique_id = uuid();
         setStreamId(unique_id.slice(0, 10))
@@ -55,9 +57,9 @@ const NewStreamModal = ({ handleClose, open }) => {
                 ownerName: user?.displayName,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             }
-            const userSchema = {
-                streamData: [id],
-            }
+            // const userSchema = {
+            //     streamData: [id],
+            // }
 
             db.collection("streams").add(schema)
             db.collection("users").doc(user.email || userEmail).update({
