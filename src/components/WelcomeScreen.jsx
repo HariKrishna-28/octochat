@@ -1,12 +1,18 @@
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
+// import { useCollection } from 'react-firebase-hooks/firestore';
+// import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+// import { selectUserEmail } from '../features/userSlice';
 import { auth, provider } from '../firebase';
 import LoadScreen from './LoadScreen';
 
 const WelcomeScreen = () => {
     const [user, loading, error] = useAuthState(auth)
+    // const [userData] = useCollection(user?.email && db.collection("users").doc(user.email))
     const navigate = useNavigate()
+    // const userEmail = useSelector(selectUserEmail)
+    // const dispatch = useDispatch()
 
     const navigator = (path) => {
         navigate(`/${path}`)
@@ -28,8 +34,12 @@ const WelcomeScreen = () => {
         await auth.signOut()
     }
 
+
     // useEffect(() => {
-    //     user && navigator("channels")
+    //     user && userData === undefined &&
+    //         db.collection("users").doc(user.email).set({
+    //             subscribedStreams: [],
+    //         })
     // }, [user])
 
     return (

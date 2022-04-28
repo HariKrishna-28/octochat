@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import ServerIcon from './ServerIcon'
+// import ServerIcon from './ServerIcon'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useNavigate, Link } from 'react-router-dom'
@@ -21,15 +21,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectStreamId, selectStreamName, setStreamInfo } from '../features/streamSlice';
 import HomeIcon from '@mui/icons-material/Home';
 import { setChannelInfo } from '../features/channelSlice';
+import { selectUserEmail, setUserInfo } from '../features/userSlice';
+import Streams from './Streams';
+
 
 const Home = () => {
-    const [user] = useAuthState(auth)
+    const [user, userLoad] = useAuthState(auth)
+    const userEmail = useSelector(selectUserEmail)
     const [openStreamModal, setOpenStreamModal] = useState(false)
     const [openChannelModal, setOpenChannelModal] = useState(false)
     const streamId = useSelector(selectStreamId)
     const streamName = useSelector(selectStreamName)
     const dispatch = useDispatch()
-    const [stream, streamLoad, streamErr] = useCollection(db.collection("streams"))
+    const [userData] = useCollection(user && db.collection("users"))
+    // const [streamLoad, streamErr] = useCollection(db.collection("streams"))
+    const [streamSubscriptionData, streamSubLoad, streamErr] = useCollection(user && db.collection("users"))
     const [channels, loading, error] = useCollection(
         streamId &&
         db.collection("streams")
@@ -63,12 +69,38 @@ const Home = () => {
         dispatch(setStreamInfo({
             streamId: null,
             streamName: null,
+            innerStreamId: null,
         }))
         dispatch(setChannelInfo({
             channelId: null,
             channelName: null,
         }))
     }
+
+    useEffect(() => {
+        if (loading)
+            return
+        dispatch(setUserInfo({
+            userName: user?.displayName,
+            userImage: user?.photoURL,
+            userEmail: user?.email,
+            userId: user?.uid,
+        }))
+
+        !userLoad &&
+            // eslint-disable-next-line
+            user && userData?.docs.map((doc) => {
+                if (doc.id === user?.email || doc.id === userEmail) {
+                    // eslint-disable-next-line
+                    return
+                }
+            })
+        db.collection("users").doc(user?.email).set({
+            subscribedStreams: [],
+        })
+        // eslint-disable-next-line
+    }, [])
+
 
     useEffect(() => {
         !user && navigate('/')
@@ -97,21 +129,40 @@ const Home = () => {
                         </Tooltip>
                     </Link>
                     <hr className='border-gray-700 border w-8 mx-auto' />
+
+                    {/* <ServerIcon /> */}
                     {
-                        streamLoad ?
+                        streamSubLoad ?
                             <div className='flex flex-col justify-center items-center h-screen'>
                                 <LoadScreen />
                             </div>
-                            : stream?.docs.map((doc) => {
-                                return (
-                                    <ServerIcon
-                                        image={doc.data()?.streamDisplayImage}
-                                        id={doc.id}
-                                        key={doc.id}
-                                        name={doc.data().streamName}
-                                    />
-                                )
+                            :
+                            // eslint-disable-next-line
+                            streamSubscriptionData?.docs.map((doc) => {
+                                if (doc.id === user?.email || doc.id === userEmail) {
+                                    const data = doc.data().subscribedStreams
+                                    return (
+                                        <Streams
+                                            key={doc.id}
+                                            data={data}
+                                        />
+                                    )
+                                    // data.map((stream, id) => {
+                                    //     return (<h1>{stream}</h1>)
+                                    // })
+                                }
                             })
+
+                        // stream?.docs.map((doc) => {
+                        //     return (
+                        //         <ServerIcon
+                        //             image={doc.data()?.streamDisplayImage}
+                        //             id={doc.id}
+                        //             key={doc.id}
+                        //             name={doc.data().streamName}
+                        //         />
+                        //     )
+                        // })
                     }
 
 
@@ -130,14 +181,13 @@ const Home = () => {
                     </div>
                 </div>
 
-                {/* Rooms */}
+                {/* Stream */}
                 <div className='bg-discord_channelsBg flex flex-col min-w-max'>
                     <h2
                         className='flex text-white font-bold text-sm items-center justify-between border-b border-gray-800 p-4 hover:bg-discord_serverNameHoverBg cursor-pointer'>
                         {streamName ?
                             <>
                                 {streamName}
-                                <KeyboardArrowDownIcon />
                             </>
                             :
                             <div>
@@ -145,6 +195,7 @@ const Home = () => {
                             </div>
                         }
                     </h2>
+
                     <div className='text-discord_channel flex-grow overflow-y-scroll scrollbar-hide'>
                         <div className='flex items-center p-2 mb-2'>
                             <KeyboardArrowDownIcon
@@ -200,6 +251,8 @@ const Home = () => {
                             </h1>
                         }
                     </div>
+
+                    {/* user stats section */}
                     <div className='bg-discord_userSectionBg p-2 flex justify-between items-center space-x-8'>
                         <div className='flex gap-2 justify-between items-center'>
                             <img src={user?.photoURL} alt="user" className='h-10 rounded-full' draggable="false" />

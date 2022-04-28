@@ -6,6 +6,9 @@ import { auth, db } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import firebase from "firebase/compat/app";
 import { v4 as uuid } from 'uuid';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { useSelector } from 'react-redux';
+import { selectUserEmail } from '../../features/userSlice';
 
 const style = {
     position: 'absolute',
@@ -26,6 +29,10 @@ const NewStreamModal = ({ handleClose, open }) => {
     const [streamName, setStreamName] = useState("")
     const [streamId, setStreamId] = useState("")
     const [user] = useAuthState(auth)
+    const userEmail = useSelector(selectUserEmail)
+    // const [flag, setFlag] = useState(false)
+    // const [streams] = useCollection(flag &&
+    //     db.collection("streams"))
 
     const generateId = () => {
         const unique_id = uuid();
@@ -35,20 +42,29 @@ const NewStreamModal = ({ handleClose, open }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        generateId()
+        const id = uuid().slice(0, 10)
         const avatar = avatarOptions[Math.floor(Math.random() * avatarOptions.length)]
         if (streamName === "") return
         try {
-            db.collection("streams").add({
-                streamId: streamId,
+            const schema = {
                 streamName: streamName,
+                streamId: id,
                 streamDisplayImage: `https://avatars.dicebear.com/api/${avatar}/${streamName}.svg`,
                 ownerId: user?.uid,
                 ownerEmail: user?.email,
                 ownerName: user?.displayName,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            }
+            const userSchema = {
+                streamData: [id],
+            }
+
+            db.collection("streams").add(schema)
+            db.collection("users").doc(user.email || userEmail).update({
+                subscribedStreams: firebase.firestore.FieldValue.arrayUnion(id)
             })
             handleClose()
+
         } catch (error) {
             console.log(error)
         }
@@ -86,6 +102,7 @@ const NewStreamModal = ({ handleClose, open }) => {
                             <input
                                 type="text"
                                 required
+                                autoFocus
                                 placeholder='Enter the name of the stream'
                                 onChange={(e) => setStreamName(e.target.value)}
                                 className='bg-discord_chatInputBg p-3 rounded focus:outline-none text-discord_chatINputText lg:max-w-xl w-full placeholder:divide-discord_chatINputText text-sm'
@@ -95,7 +112,7 @@ const NewStreamModal = ({ handleClose, open }) => {
                         <div className='text-center'>
                             {streamName !== "" &&
                                 <button
-                                    className='bg-discord_serverBg hover:bg-discord_purple text-white p-2 rounded hover:rounded-md font-semibold'
+                                    className='hover:bg-discord_serverBg bg-discord_purple text-white p-2 rounded hover:rounded-md font-semibold'
                                     type='submit '>
                                     submit
                                 </button>}

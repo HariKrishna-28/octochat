@@ -55,6 +55,7 @@ const NewChannelModal = ({ handleClose, open, handleAddChannel }) => {
                         <div className='flex flex-col gap-2 text-center mt-2 mb-2'>
                             <input
                                 type="text"
+                                autoFocus
                                 required
                                 placeholder='Enter the name of the channel'
                                 onChange={(e) => setChannelName(e.target.value)}
@@ -66,9 +67,9 @@ const NewChannelModal = ({ handleClose, open, handleAddChannel }) => {
                         <div className='text-center'>
                             {channelName !== "" &&
                                 <button
-                                    className='bg-discord_serverBg hover:bg-discord_purple text-white p-2 rounded hover:rounded-md font-semibold'
+                                    className='hover:bg-discord_serverBg bg-discord_purple text-white p-2 rounded hover:rounded-md font-semibold'
                                     type='submit '>
-                                    submit
+                                    Crerate
                                 </button>}
                         </div>
 

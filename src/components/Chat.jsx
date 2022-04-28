@@ -12,6 +12,10 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import { Tooltip } from '@mui/material';
 import Zoom from '@mui/material/Zoom';
 import LoadScreen from './LoadScreen';
+import { selectStreamId } from '../features/streamSlice';
+import StreamInfo from './StreamInfo';
+import StreamSettings from './StreamSettings';
+
 
 const Chat = () => {
     const channelId = useSelector(selectChannelId)
@@ -19,11 +23,12 @@ const Chat = () => {
     const inputRef = useRef("")
     const chatRef = useRef(null)
     const [user] = useAuthState(auth)
+    const streamId = useSelector(selectStreamId)
     // eslint-disable-next-line
     const [messages, loading, error] = useCollection(
         channelId &&
         db
-            .collection("channels")
+            .collection("streams")
             .doc(channelId)
             .collection("messages")
             .orderBy("timeStamp", "asc")
@@ -45,7 +50,7 @@ const Chat = () => {
         event.preventDefault()
         if (inputRef.current.value === "") return
         try {
-            db.collection("channels").doc(channelId).collection("messages").add({
+            db.collection("streams").doc(channelId).collection("messages").add({
                 timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
                 message: inputRef.current.value,
                 name: user?.displayName,
@@ -75,6 +80,14 @@ const Chat = () => {
                 </div>}
 
                 <div className='flex items-center justify-center'>
+                    {streamId &&
+                        <>
+                            <StreamInfo />
+                            <StreamSettings />
+                        </>
+                    }
+
+
                     <div className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2'>
                         <a href="https://github.com/HariKrishna-28/octochat" target="_blank" rel="noopener noreferrer">
                             <Tooltip

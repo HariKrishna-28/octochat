@@ -4,10 +4,19 @@ import { Tooltip } from '@mui/material';
 // import Fade from '@mui/material/Fade';
 import Zoom from '@mui/material/Zoom';
 import { auth } from '../firebase';
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from '../features/userSlice';
 
 const LogOutButton = () => {
+    const dispatch = useDispatch()
 
     const signOut = async () => {
+        dispatch(setUserInfo({
+            userName: null,
+            userImage: null,
+            userEmail: null,
+            userId: null,
+        }))
         await auth.signOut()
     }
 
