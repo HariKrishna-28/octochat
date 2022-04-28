@@ -26,7 +26,7 @@ import Streams from './Streams';
 
 
 const Home = () => {
-    const [user, userLoad] = useAuthState(auth)
+    const [user] = useAuthState(auth)
     const userEmail = useSelector(selectUserEmail)
     const [openStreamModal, setOpenStreamModal] = useState(false)
     const [openChannelModal, setOpenChannelModal] = useState(false)
@@ -87,24 +87,25 @@ const Home = () => {
             userId: user?.uid,
         }))
 
-
         // eslint-disable-next-line
-    }, [])
-
-    useEffect(() => {
-        !userLoad &&
-            // eslint-disable-next-line
-            user && userData?.docs.map((doc) => {
-                if (doc.id === user?.email || doc.id === userEmail) {
-                    // eslint-disable-next-line
-                    return
-                }
-            })
+        user && userData?.docs.map((doc) => {
+            if (doc.id === user?.email || doc.id === userEmail) {
+                // eslint-disable-next-line
+                return
+            }
+        })
         db.collection("users").doc(user?.email).set({
             subscribedStreams: [],
         })
         // eslint-disable-next-line
-    }, [userLoad])
+    }, [])
+
+    // useEffect(() => {
+    //     !userLoad &&
+    //         // eslint-disable-next-line
+
+    //     // eslint-disable-next-line
+    // }, [userLoad])
 
     useEffect(() => {
         !user && navigate('/')
