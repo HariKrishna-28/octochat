@@ -26,7 +26,7 @@ import Streams from './Streams';
 
 
 const Home = () => {
-    const [user] = useAuthState(auth)
+    const [user, userLoad] = useAuthState(auth)
     const userEmail = useSelector(selectUserEmail)
     const [openStreamModal, setOpenStreamModal] = useState(false)
     const [openChannelModal, setOpenChannelModal] = useState(false)
@@ -87,25 +87,37 @@ const Home = () => {
             userId: user?.uid,
         }))
 
-        // eslint-disable-next-line
-        user && userData?.docs.map((doc) => {
-            if (doc.id === user?.email || doc.id === userEmail) {
-                // eslint-disable-next-line
-                return
-            }
-        })
-        db.collection("users").doc(user?.email).set({
-            subscribedStreams: [],
-        })
+
         // eslint-disable-next-line
     }, [])
 
-    // useEffect(() => {
-    //     !userLoad &&
-    //         // eslint-disable-next-line
-
-    //     // eslint-disable-next-line
-    // }, [userLoad])
+    useEffect(() => {
+        if (!userLoad) {
+            if (user) {
+                db.collection("users").doc(user?.email || userEmail).get()
+                    .then(res => {
+                        const existFlag = res.exists
+                        if (!existFlag) {
+                            db.collection("users").doc(user?.email || userEmail).set({
+                                subscribedStreams: [],
+                            })
+                            console.log("created user subscription array")
+                        }
+                    })
+                    .catch(err => console.log(err))
+            }
+            //     user && userData?.docs.map((doc) => {
+            //         if (doc.id === user?.email || doc.id === userEmail) {
+            //             // eslint-disable-next-line
+            //             return
+            //         }
+            //     })
+            // db.collection("users").doc(user?.email).set({
+            //     subscribedStreams: [],
+            // })
+        }
+        // eslint-disable-next-line
+    }, [userLoad])
 
     useEffect(() => {
         !user && navigate('/')

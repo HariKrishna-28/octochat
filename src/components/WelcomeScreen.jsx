@@ -1,27 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
-// import { useCollection } from 'react-firebase-hooks/firestore';
-// import { useSelector } from 'react-redux';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-// import { selectUserEmail } from '../features/userSlice';
-import { auth, provider } from '../firebase';
+import { selectUserEmail } from '../features/userSlice';
+import { auth, provider, db } from '../firebase';
 import LoadScreen from './LoadScreen';
 
 const WelcomeScreen = () => {
     const [user, loading, error] = useAuthState(auth)
-    // const [userData] = useCollection(user?.email && db.collection("users").doc(user.email))
+    const [userData] = useCollection(user && db.collection("users"))
     const navigate = useNavigate()
-    // const userEmail = useSelector(selectUserEmail)
+    const userEmail = useSelector(selectUserEmail)
+    const [flag, setFlag] = useState(false)
     // const dispatch = useDispatch()
 
     const navigator = (path) => {
         navigate(`/${path}`)
     }
 
+    // const createUser = () => {
+    //     userData?.docs.map((doc) => {
+    //         if (doc.id === user?.email || doc.id === userEmail)
+    //             setFlag(true)
+    //         return
+    //     })
+    //     !flag && db.collection("users").doc(user?.email || userEmail).set({
+    //         subscribedStreams: []
+    //     })
+    // }
+
     const signIn = async (event) => {
         event.preventDefault()
         await auth.signInWithPopup(provider)
             .then(() => {
+                // createUser()
                 navigator("streams")
             })
             .catch((err) => {
@@ -35,12 +48,18 @@ const WelcomeScreen = () => {
     }
 
 
-    useEffect(() => {
-        user && userData === undefined &&
-            db.collection("users").doc(user.email).set({
-                subscribedStreams: [],
-            })
-    }, [user])
+    // useEffect(() => {
+    //     user && userData ?
+    //         userData?.docs.map((doc) => {
+    //             if (doc.id === user?.email || doc.id === userEmail)
+    //                 return
+    //         })
+    //         :
+    //         db.collection("users").doc(user?.email).set({
+    //             subscribedStreams: []
+    //         })
+
+    // }, [user])
 
     return (
         <div className="bg-discord_channelsBg text-discord_chatINputText h-screen">
