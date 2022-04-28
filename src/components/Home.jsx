@@ -87,6 +87,11 @@ const Home = () => {
             userId: user?.uid,
         }))
 
+
+        // eslint-disable-next-line
+    }, [])
+
+    useEffect(() => {
         !userLoad &&
             // eslint-disable-next-line
             user && userData?.docs.map((doc) => {
@@ -99,8 +104,7 @@ const Home = () => {
             subscribedStreams: [],
         })
         // eslint-disable-next-line
-    }, [])
-
+    }, [userLoad])
 
     useEffect(() => {
         !user && navigate('/')
