@@ -18,6 +18,7 @@ const IndividualStreams = ({ id }) => {
     const [innerSid, setInnerSid] = useState("")
     const [ownerEmail, setOwnerEmail] = useState("")
     const [displayImage, setDisplayImage] = useState("")
+    const [presentFlag, setPresentFlag] = useState(false)
 
     const setStream = () => {
         dispatch(setStreamInfo({
@@ -43,6 +44,7 @@ const IndividualStreams = ({ id }) => {
                 setInnerSid(d.streamId)
                 setOwnerEmail(d.ownerEmail)
                 setDisplayImage(d.streamDisplayImage)
+                setPresentFlag(true)
                 return
             }
         })
@@ -53,6 +55,7 @@ const IndividualStreams = ({ id }) => {
     return (
         <>{
             !load ?
+                presentFlag &&
                 <div onClick={setStream}>
                     <Tooltip
                         placement='left'

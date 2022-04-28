@@ -25,6 +25,6 @@ export const { setStreamInfo } = streamSlice.actions;
 export const selectStreamId = (state) => state.stream.streamId;
 export const selectStreamName = (state) => state.stream.streamName;
 export const selectInnerStreamId = (state) => state.stream.innerStreamId;
-export const ownerEmail = (state) => state.stream.ownerEmail;
+export const selectownerEmail = (state) => state.stream.ownerEmail;
 
 export default streamSlice.reducer;
