@@ -35,12 +35,12 @@ const WelcomeScreen = () => {
     }
 
 
-    // useEffect(() => {
-    //     user && userData === undefined &&
-    //         db.collection("users").doc(user.email).set({
-    //             subscribedStreams: [],
-    //         })
-    // }, [user])
+    useEffect(() => {
+        user && userData === undefined &&
+            db.collection("users").doc(user.email).set({
+                subscribedStreams: [],
+            })
+    }, [user])
 
     return (
         <div className="bg-discord_channelsBg text-discord_chatINputText h-screen">
