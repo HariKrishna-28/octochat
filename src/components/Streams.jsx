@@ -1,12 +1,19 @@
 import React from 'react'
 import { useCollection } from 'react-firebase-hooks/firestore'
 import { db } from '../firebase'
+import IndividualStreams from './IndividualStreams'
 
-const Streams = ({ id }) => {
-    console.log(id)
+const Streams = ({ data }) => {
     return (
-        <div className='text-bold text-white'>Streams</div>
+        data.map((element, index) => {
+            return (
+                <IndividualStreams
+                    key={index}
+                    id={element} />
+            )
+        })
     )
+
 }
 
 export default Streams

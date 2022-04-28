@@ -137,7 +137,10 @@ const Home = () => {
                                 if (doc.id === user?.email || doc.id === userEmail) {
                                     const data = doc.data().subscribedStreams
                                     return (
-                                        <h1>{data}</h1>
+                                        <Streams
+                                            key={doc.id}
+                                            data={data}
+                                        />
                                     )
                                     // data.map((stream, id) => {
                                     //     return (<h1>{stream}</h1>)
