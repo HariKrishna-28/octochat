@@ -17,20 +17,20 @@
 
 <div align="center">
 
-| <div align ="center">Name </div>                                               | <div align = "center">Description</div>           |
-| ------------------------------------------------------------------------------ | ------------------------------------------------- |
-| **[ReactJs](https://reactjs.org)**                                             | Front End                                         |
-| **[Tailwind CSS](https://tailwindcss.com/)**                                   | A utility-first CSS framework                     |
-| **[MUI](https://mui.com/material-ui/getting-started/installation/)**           | React UI library                                  |
-| **[Material Icons](https://mui.com/material-ui/material-icons/)**              | Ready-to-use React Material Icons                 |
-| **[Firebase Auth](https://firebase.google.com/docs/auth)**                     | Authentication Platform                           |
-| **[Firebase Realtime Database](https://firebase.google.com/docs/database)**    | NoSQL cloud database                              |
-| **[React Router Dom](https://reactrouter.com/docs/en/v6)**                     | Declarative Routing for react apps                |
-| **[React Redux](https://react-redux.js.org/introduction/getting-started)**     | Library to Cntralise and manage application state |
-| **[React Firebase Hooks](https://www.npmjs.com/package/react-firebase-hooks)** | LReact Hooks for Firebase                         |
-| **[Dice Bear Avatars](https://avatars.dicebear.com/docs)**                     | Open source avatar library                        |
-| **[UUID](https://github.com/uuidjs/uuid)**                                     | RFC-compliant UUID generator                      |
-| **[MomentJs](https://momentjs.com/docs/)**                                     | Date parsing and manipulating library             |
+| <div align ="center">Name </div>                                               | <div align = "center">Description</div>            |
+| ------------------------------------------------------------------------------ | -------------------------------------------------- |
+| **[ReactJs](https://reactjs.org)**                                             | Front End JavaScript Library                       |
+| **[Tailwind CSS](https://tailwindcss.com/)**                                   | A utility-first CSS framework                      |
+| **[MUI](https://mui.com/material-ui/getting-started/installation/)**           | React UI library                                   |
+| **[Material Icons](https://mui.com/material-ui/material-icons/)**              | Ready-to-use React Material Icons                  |
+| **[Firebase Auth](https://firebase.google.com/docs/auth)**                     | Authentication Platform                            |
+| **[Firebase Realtime Database](https://firebase.google.com/docs/database)**    | NoSQL cloud database                               |
+| **[React Router Dom](https://reactrouter.com/docs/en/v6)**                     | Declarative Routing for react apps                 |
+| **[React Redux](https://react-redux.js.org/introduction/getting-started)**     | Library to Centralise and manage application state |
+| **[React Firebase Hooks](https://www.npmjs.com/package/react-firebase-hooks)** | React Hooks for Firebase                           |
+| **[Dice Bear Avatars](https://avatars.dicebear.com/docs)**                     | Open source avatar library                         |
+| **[UUID](https://github.com/uuidjs/uuid)**                                     | RFC-compliant UUID generator                       |
+| **[MomentJs](https://momentjs.com/docs/)**                                     | Date parsing and manipulating library              |
 
 </div>
 <br>
