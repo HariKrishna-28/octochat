@@ -11,7 +11,8 @@ import LoadScreen from './LoadScreen';
 const IndividualStreams = ({ id }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [streamName] = useCollection(db.collection("streams"))
+    // const [streamName] = useCollection(db.collection("streams"))
+    const [streamName] = useCollection(db.collection("streams").where("streamId", "==", id))
     const [load, setLoad] = useState(false)
     const [sId, setSId] = useState("")
     const [sName, setSname] = useState("")
@@ -37,6 +38,9 @@ const IndividualStreams = ({ id }) => {
     useEffect(() => {
         setLoad(true)
         // eslint-disable-next-line
+        // streamName?.docs.map(doc => {
+        //     console.log(doc.data())
+        // })
         streamName?.docs.map(doc => {
             if (doc.data().streamId === id) {
                 const d = doc.data()

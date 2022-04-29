@@ -18,7 +18,7 @@ import Chat from './Chat';
 import NewStreamModal from './modals/NewStreamModal';
 import NewChannelModal from './modals/NewChannelModal';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectStreamId, selectStreamName, setStreamInfo } from '../features/streamSlice';
+import { selectownerEmail, selectStreamId, selectStreamName, setStreamInfo } from '../features/streamSlice';
 import HomeIcon from '@mui/icons-material/Home';
 import { setChannelInfo } from '../features/channelSlice';
 import { selectUserEmail, setUserInfo } from '../features/userSlice';
@@ -42,6 +42,7 @@ const Home = () => {
             .doc(streamId)
             .collection("channels")
     )
+    const ownerEmail = useSelector(selectownerEmail)
     const navigate = useNavigate()
 
     // const handleOpen = () => setOpen(true);
@@ -101,20 +102,11 @@ const Home = () => {
                             db.collection("users").doc(user?.email || userEmail).set({
                                 subscribedStreams: [],
                             })
-                            console.log("created user subscription array")
+                            console.log("Created user subscription array")
                         }
                     })
                     .catch(err => console.log(err))
             }
-            //     user && userData?.docs.map((doc) => {
-            //         if (doc.id === user?.email || doc.id === userEmail) {
-            //             // eslint-disable-next-line
-            //             return
-            //         }
-            //     })
-            // db.collection("users").doc(user?.email).set({
-            //     subscribedStreams: [],
-            // })
         }
         // eslint-disable-next-line
     }, [userLoad])
@@ -221,7 +213,7 @@ const Home = () => {
                                 className='font-semibold'>
                                 Channels
                             </h4>
-                            {streamName &&
+                            {streamName && (ownerEmail === userEmail || user?.email === ownerEmail) &&
                                 <div className='ml-auto  cursor-pointer hover:bg-discord_channelHoverBg rounded-md justify-end'>
                                     <Tooltip
                                         TransitionComponent={Zoom}
