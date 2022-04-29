@@ -1,16 +1,22 @@
 import { Tooltip, Zoom } from '@mui/material';
 import React, { useEffect, useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setChannelInfo } from '../features/channelSlice';
-import { setStreamInfo } from '../features/streamSlice';
-import { db } from '../firebase'
+import { selectInnerStreamId, setStreamInfo } from '../features/streamSlice';
+import { selectUserEmail } from '../features/userSlice';
+import { auth, db } from '../firebase'
 import LoadScreen from './LoadScreen';
+import firebase from 'firebase/compat/app';
 
 const IndividualStreams = ({ id }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const innerStreamId = useSelector(selectInnerStreamId)
+    const userEmail = useSelector(selectUserEmail)
+    const [user] = useAuthState(auth)
     // const [streamName] = useCollection(db.collection("streams"))
     const [streamName] = useCollection(db.collection("streams").where("streamId", "==", id))
     const [load, setLoad] = useState(false)
@@ -54,6 +60,9 @@ const IndividualStreams = ({ id }) => {
                 // eslint-disable-next-line
                 return
             }
+        })
+        db.collection("users").doc(user?.email || userEmail).update({
+            subscribedStreams: firebase.firestore.FieldValue.arrayRemove(innerStreamId)
         })
         setLoad(false)
         // eslint-disable-next-line
