@@ -101,7 +101,7 @@ const Home = () => {
                             db.collection("users").doc(user?.email || userEmail).set({
                                 subscribedStreams: [],
                             })
-                            console.log("created user subscription array")
+                            console.log("Created user subscription array")
                         }
                     })
                     .catch(err => console.log(err))
