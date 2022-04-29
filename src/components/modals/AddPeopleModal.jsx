@@ -73,7 +73,7 @@ const AddPeopleModal = ({ handleClose, open }) => {
 
                 <div>
                     <div className='p-4 text-md font-light text-center'>
-                        Enter the email,s of members to add them to
+                        Enter the emails of members to add them to
                         <span className='mx-1 text-discord_purple font-bold'>
                             {streamName}
                         </span>

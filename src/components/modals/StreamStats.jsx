@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
-import moment from 'moment'
+// import moment from 'moment'
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
-import { useCollection } from 'react-firebase-hooks/firestore';
+// import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../../firebase';
 import { useSelector } from 'react-redux';
 import { selectownerEmail, selectStreamId, selectStreamName } from '../../features/streamSlice';
@@ -27,7 +27,7 @@ const StreamStats = ({ handleClose, open }) => {
     const streamId = useSelector(selectStreamId)
     const streamName = useSelector(selectStreamName)
     const ownerMail = useSelector(selectownerEmail)
-    const [createdAt, setCreatedAt] = useState({})
+    // const [createdAt, setCreatedAt] = useState({})
     const [ownerName, setOwnerName] = useState("")
     const [streamDisplayImage, setStreamDisplayImage] = useState("")
     // const [streamDisplayImage, setStreamDisplayImage] = useState("")
@@ -43,7 +43,7 @@ const StreamStats = ({ handleClose, open }) => {
                         const data = res.data()
                         setOwnerName(data.ownerName)
                         setStreamDisplayImage(data.streamDisplayImage)
-                        setCreatedAt(data.createdAt)
+                        // setCreatedAt(data.createdAt)
                     }
                 })
         } catch (error) {
@@ -93,7 +93,7 @@ const StreamStats = ({ handleClose, open }) => {
                         </div>
                         <div className='font-semibold text-center'>Owned By : {ownerName}</div>
                         <div className='font-semibold text-center'>Mail : {ownerMail}</div>
-                        <div className='font-semibold text-center'>CreatedAt : {moment(createdAt?.toDate().getTime()).format("lll")}</div>
+                        {/* <div className='font-semibold text-center'>CreatedAt : {moment(createdAt?.toDate().getTime()).format("lll")}</div> */}
                     </div> :
                     <div
                         className='flex flex-col justify-center items-center h-screen'
