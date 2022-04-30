@@ -7,6 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { auth } from '../../firebase';
 import LoadScreen from '../LoadScreen';
 import { useAuthState } from 'react-firebase-hooks/auth';
+// import { Badge } from '@mui/material';
 
 
 const style = {
@@ -52,12 +53,19 @@ const UserInfoModal = ({ handleClose, open }) => {
                 {!userLoad ?
                     <div className='flex flex-col gap-1'>
                         <div className='flex justify-center mb-2'>
+                            {/* <Badge
+                                overlap="circular"
+                                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                                badgeContent={
+                                    <div className='bg-green-500 rounded-full p-1.5' />
+                                }> */}
                             <img
                                 draggable="false"
                                 src={user?.photoURL}
                                 alt="streamavatar"
                                 className='h-20 rounded-full'
                             />
+                            {/* </Badge> */}
                         </div>
                         <div className='font-semibold text-center'>
                             UserName : {user?.displayName}

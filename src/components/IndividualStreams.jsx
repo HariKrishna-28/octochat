@@ -48,7 +48,7 @@ const IndividualStreams = ({ id }) => {
                 subscribedStreams: firebase.firestore.FieldValue.arrayRemove(innerStreamId)
             })
         } else {
-            streamName?.docs.map(doc => {
+            streamName?.docs.forEach(doc => {
                 if (doc.data().streamId === id) {
                     const d = doc.data()
                     setSId(doc.id)

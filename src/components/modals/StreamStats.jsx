@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
-// import moment from 'moment'
+import moment from 'moment'
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 // import { useCollection } from 'react-firebase-hooks/firestore';
@@ -27,8 +27,9 @@ const StreamStats = ({ handleClose, open }) => {
     const streamId = useSelector(selectStreamId)
     const streamName = useSelector(selectStreamName)
     const ownerMail = useSelector(selectownerEmail)
-    // const [createdAt, setCreatedAt] = useState({})
+    const [createdAt, setCreatedAt] = useState({})
     const [ownerName, setOwnerName] = useState("")
+    const [createdDate, setDate] = useState("")
     const [streamDisplayImage, setStreamDisplayImage] = useState("")
     // const [streamDisplayImage, setStreamDisplayImage] = useState("")
     // const [streamName, loading, error] = useCollection(db.collection("streams").doc(streamId).get())
@@ -40,10 +41,15 @@ const StreamStats = ({ handleClose, open }) => {
                 .then((res) => {
                     const existFlag = res.exists
                     if (existFlag) {
-                        const data = res.data()
-                        setOwnerName(data.ownerName)
-                        setStreamDisplayImage(data.streamDisplayImage)
-                        // setCreatedAt(data.createdAt)
+                        try {
+                            const data = res.data()
+                            setOwnerName(data.ownerName)
+                            setStreamDisplayImage(data.streamDisplayImage)
+                            setCreatedAt(data.createdAt)
+                            setDate(moment(createdAt.toDate().getTime()).format("lll"))
+                        } catch (error) {
+                            console.log(error)
+                        }
                     }
                 })
         } catch (error) {
@@ -93,7 +99,7 @@ const StreamStats = ({ handleClose, open }) => {
                         </div>
                         <div className='font-semibold text-center'>Owned By : {ownerName}</div>
                         <div className='font-semibold text-center'>Mail : {ownerMail}</div>
-                        {/* <div className='font-semibold text-center'>CreatedAt : {moment(createdAt?.toDate().getTime()).format("lll")}</div> */}
+                        {createdDate !== "" && <div className='font-semibold text-center'>CreatedAt : {createdDate}</div>}
                     </div> :
                     <div
                         className='flex flex-col justify-center items-center h-screen'
