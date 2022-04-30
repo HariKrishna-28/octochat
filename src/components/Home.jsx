@@ -23,6 +23,9 @@ import HomeIcon from '@mui/icons-material/Home';
 import { setChannelInfo } from '../features/channelSlice';
 import { selectUserEmail, setUserInfo } from '../features/userSlice';
 import Streams from './Streams';
+import InfoIcon from '@mui/icons-material/Info';
+import UserInfoModal from './modals/UserInfoModal';
+
 
 
 const Home = () => {
@@ -33,6 +36,7 @@ const Home = () => {
     const streamId = useSelector(selectStreamId)
     const streamName = useSelector(selectStreamName)
     const dispatch = useDispatch()
+    const [userStats, setUserStats] = useState(false)
     const [userData] = useCollection(user && db.collection("users"))
     // const [streamLoad, streamErr] = useCollection(db.collection("streams"))
     const [streamSubscriptionData, streamSubLoad, streamErr] = useCollection(user && db.collection("users"))
@@ -279,17 +283,22 @@ const Home = () => {
                                 <Tooltip
                                     TransitionComponent={Zoom}
                                     TransitionProps={{ timeout: 400 }}
-                                    title="Log-out">
+                                    title="My Info">
                                     <button
                                         className='hover:bg-discord_channelHoverBg hover:text-white p-2 rounded-md'
-                                        onClick={(event) => signOut(event)}>
-                                        <LogoutIcon className='h-5 ' />
+                                        onClick={() => setUserStats(true)}>
+                                        <InfoIcon className='h-5 ' />
                                     </button>
                                 </Tooltip>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <UserInfoModal
+                    open={userStats}
+                    handleClose={() => setUserStats(false)}
+                />
 
                 <NewStreamModal
                     open={openStreamModal}
