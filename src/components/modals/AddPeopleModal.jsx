@@ -102,9 +102,9 @@ const AddPeopleModal = ({ handleClose, open }) => {
                                         type='submit '>
                                         Add participants
                                     </button>
-                                    <div className='text-center p-2 font-light text-sm mt-2'>
+                                    {/* <div className='text-center p-2 font-light text-sm mt-2'>
                                         Please note that a user should at least have one stream
-                                    </div>
+                                    </div> */}
                                 </>
                             }
                         </div>
