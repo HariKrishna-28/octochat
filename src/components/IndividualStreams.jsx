@@ -43,27 +43,27 @@ const IndividualStreams = ({ id }) => {
 
     useEffect(() => {
         setLoad(true)
-        // eslint-disable-next-line
-        // streamName?.docs.map(doc => {
-        //     console.log(doc.data())
-        // })
-        streamName?.docs.map(doc => {
-            if (doc.data().streamId === id) {
-                const d = doc.data()
-                setSId(doc.id)
-                setSname(d.streamName)
-                setInnerSid(d.streamId)
-                setOwnerEmail(d.ownerEmail)
-                setDisplayImage(d.streamDisplayImage)
-                setPresentFlag(true)
-                setLoad(false)
-                // eslint-disable-next-line
-                return
-            }
-        })
-        db.collection("users").doc(user?.email || userEmail).update({
-            subscribedStreams: firebase.firestore.FieldValue.arrayRemove(innerStreamId)
-        })
+        if (streamName?.docs.length === 0) {
+            db.collection("users").doc(user?.email || userEmail).update({
+                subscribedStreams: firebase.firestore.FieldValue.arrayRemove(innerStreamId)
+            })
+        } else {
+            streamName?.docs.map(doc => {
+                if (doc.data().streamId === id) {
+                    const d = doc.data()
+                    setSId(doc.id)
+                    setSname(d.streamName)
+                    setInnerSid(d.streamId)
+                    setOwnerEmail(d.ownerEmail)
+                    setDisplayImage(d.streamDisplayImage)
+                    setPresentFlag(true)
+                    setLoad(false)
+                    // eslint-disable-next-line
+                    return
+                }
+            })
+        }
+
         setLoad(false)
         // eslint-disable-next-line
     }, [streamName])

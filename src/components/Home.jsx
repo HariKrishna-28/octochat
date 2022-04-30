@@ -71,6 +71,7 @@ const Home = () => {
             streamId: null,
             streamName: null,
             innerStreamId: null,
+            ownerEmail: null,
         }))
         dispatch(setChannelInfo({
             channelId: null,
@@ -103,6 +104,8 @@ const Home = () => {
                                 subscribedStreams: [],
                             })
                             console.log("Created user subscription array")
+                        } else {
+                            console.log("User already exists")
                         }
                     })
                     .catch(err => console.log(err))

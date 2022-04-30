@@ -4,13 +4,11 @@ import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectInnerStreamId, selectStreamId, selectStreamName, setStreamInfo } from '../../features/streamSlice';
-import { db, auth } from '../../firebase';
-import { useNavigate } from 'react-router-dom';
+import { auth, db } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { selectUserEmail } from '../../features/userSlice';
 import firebase from 'firebase/compat/app';
 import { setChannelInfo } from '../../features/channelSlice';
-
 
 
 const style = {
@@ -25,14 +23,13 @@ const style = {
     p: 3,
 };
 
-const StreamDeleteModal = ({ handleClose, open }) => {
-    const dispatch = useDispatch()
+const ExitStreamModal = ({ handleClose, open }) => {
     const streamName = useSelector(selectStreamName)
     const streamId = useSelector(selectStreamId)
-    const innerStreamId = useSelector(selectInnerStreamId)
+    const dispatch = useDispatch()
     const [user] = useAuthState(auth)
     const userEmail = useSelector(selectUserEmail)
-    const navigate = useNavigate()
+    const innerStreamId = useSelector(selectInnerStreamId)
 
     const cleanSlate = () => {
         dispatch(setStreamInfo({
@@ -49,8 +46,7 @@ const StreamDeleteModal = ({ handleClose, open }) => {
 
     const deleteStream = () => {
         try {
-            db.collection("streams").doc(streamId).delete()
-            db.collection("users").doc(userEmail || user?.email).update({
+            db.collection("users").doc(user?.email || userEmail).update({
                 subscribedStreams: firebase.firestore.FieldValue.arrayRemove(innerStreamId)
             })
             cleanSlate()
@@ -86,7 +82,7 @@ const StreamDeleteModal = ({ handleClose, open }) => {
 
                 <div>
                     <div className='text-sm font-light p-2 mb-2 text-center'>
-                        {`Do you want to delete ${streamName}? This action won't be reversed.`}
+                        {`Do you want to exit ${streamName}? This action won't be reversed.`}
                     </div>
 
                     <div className='flex items-center justify-center gap-2'>
@@ -112,4 +108,4 @@ const StreamDeleteModal = ({ handleClose, open }) => {
     )
 }
 
-export default StreamDeleteModal
+export default ExitStreamModal
