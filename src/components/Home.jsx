@@ -137,7 +137,9 @@ const Home = () => {
                             TransitionProps={{ timeout: 400 }}
                             title="Home"
                         >
-                            <div className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2 text-center'>
+                            <div
+                                style={{ width: "60px" }}
+                                className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2 text-center'>
                                 <HomeIcon
                                     className='h-6 hover:text-white'
                                 />

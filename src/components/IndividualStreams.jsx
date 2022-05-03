@@ -88,7 +88,7 @@ const IndividualStreams = ({ id }) => {
                             src={displayImage}
                             alt="server"
                             draggable={false}
-                            className={`h-12 hover:h-11 hover:mb-1 hover:bg-discord_purple ${streamStyling} cursor-pointer rounded-2xl transition-all duration-300 ease-out`}
+                            className={`h-12 hover:h-14 hover:-mb-2 hover:bg-discord_purple ${streamStyling} cursor-pointer rounded-2xl transition-all duration-300 ease-out`}
                         />
                     </div>
                 </Tooltip>
