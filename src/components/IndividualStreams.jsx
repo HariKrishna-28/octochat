@@ -68,26 +68,30 @@ const IndividualStreams = ({ id }) => {
         // eslint-disable-next-line
     }, [streamName])
 
+    const streamStyling = innerStreamId === innerSid ? "bg-discord_channelHoverBg" : ""
 
     return (
         <>{
             !load ?
                 presentFlag &&
-                <div onClick={setStream}>
-                    <Tooltip
-                        placement='left'
-                        TransitionComponent={Zoom}
-                        TransitionProps={{ timeout: 400 }}
-                        title={sName}
+                <Tooltip
+                    placement='left'
+                    TransitionComponent={Zoom}
+                    TransitionProps={{ timeout: 400 }}
+                    title={sName}
+                >
+                    <div
+                        className='m-0 flex items-center justify-center'
+                        onClick={setStream}
                     >
                         <img
                             src={displayImage}
                             alt="server"
                             draggable={false}
-                            className='h-12 cursor-pointer rounded-full transition-all duration-100 ease-out hover:rounded-2xl'
+                            className={`h-12 hover:h-11 hover:mb-1 hover:bg-discord_purple ${streamStyling} cursor-pointer rounded-2xl transition-all duration-300 ease-out`}
                         />
-                    </Tooltip>
-                </div>
+                    </div>
+                </Tooltip>
 
                 :
                 <div className='flex flex-col items-center justify-center h-screen'>

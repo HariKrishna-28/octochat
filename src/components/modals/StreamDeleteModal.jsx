@@ -86,7 +86,11 @@ const StreamDeleteModal = ({ handleClose, open }) => {
 
                 <div>
                     <div className='text-sm font-light p-2 mb-2 text-center'>
-                        {`Do you want to delete ${streamName}? This action won't be reversed.`}
+                        Do you want to delete
+                        <span className='mx-1 text-discord_purple font-bold'>
+                            {streamName}?
+                        </span>
+                        This action won't be reversed.
                     </div>
 
                     <div className='flex items-center justify-center gap-2'>

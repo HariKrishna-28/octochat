@@ -28,7 +28,7 @@ const StreamSettings = () => {
             <div className='flex items-center gap-1 justify-center'>
                 {(userEmail === ownerEmail || user?.email === ownerEmail) ?
                     <>
-                        <div onClick={() => setShowInfo(true)} className='text-discord_channel hover:text-white p-1 cursor-pointer hover:bg-discord_channelHoverBg rounded-md'>
+                        <div onClick={() => setShowInfo(true)} className='text-discord_channel hover:text-white p-2 cursor-pointer hover:bg-discord_channelHoverBg rounded-md'>
                             <Tooltip
                                 TransitionComponent={Zoom}
                                 TransitionProps={{ timeout: 400 }}
@@ -41,7 +41,7 @@ const StreamSettings = () => {
                         </div>
                         <div
                             onClick={() => setShowPrompt(true)}
-                            className='text-discord_channel hover:text-white p-1 cursor-pointer hover:bg-discord_channelHoverBg rounded-md'>
+                            className='text-discord_channel hover:text-white p-2 cursor-pointer hover:bg-discord_channelHoverBg rounded-md'>
                             <Tooltip
                                 TransitionComponent={Zoom}
                                 TransitionProps={{ timeout: 400 }}
