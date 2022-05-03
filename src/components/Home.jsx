@@ -128,72 +128,65 @@ const Home = () => {
         <>
             <div className='flex h-screen'>
                 {/* Servers */}
-                <div className='flex flex-col space-y-3 bg-discord_serversBg p-1 min-w-max'
+                <div className='flex flex-col justify-between gap-2 bg-discord_serversBg p-1 min-w-max'
                 >
-                    <Link to="/" onClick={cleanSlate}>
-                        <Tooltip
-                            placement="left"
-                            TransitionComponent={Zoom}
-                            TransitionProps={{ timeout: 400 }}
-                            title="Home"
-                        >
-                            <div className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2 text-center'>
-                                <HomeIcon
-                                    className='h-6 hover:text-white'
-                                />
-                            </div>
-                        </Tooltip>
-                    </Link>
-                    <hr className='border-gray-700 border w-8 mx-auto' />
+                    <div >
+                        <Link to="/" onClick={cleanSlate}>
+                            <Tooltip
+                                placement="left"
+                                TransitionComponent={Zoom}
+                                TransitionProps={{ timeout: 400 }}
+                                title="Home"
+                            >
+                                <div
+                                    style={{ width: "60px" }}
+                                    className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2 text-center'>
+                                    <HomeIcon
+                                        className='h-6 hover:text-white'
+                                    />
+                                </div>
+                            </Tooltip>
+                        </Link>
+                        <hr className='border-gray-700 mt-2 border w-8 mx-auto' />
+                    </div>
 
                     {/* <ServerIcon /> */}
-                    {
-                        streamSubLoad ?
-                            <div className='flex flex-col justify-center items-center h-screen'>
-                                <LoadScreen />
-                            </div>
-                            :
-                            // eslint-disable-next-line
-                            streamSubscriptionData?.docs.map((doc) => {
-                                if (doc.id === user?.email || doc.id === userEmail) {
-                                    const data = doc.data().subscribedStreams
-                                    return (
-                                        <Streams
-                                            key={doc.id}
-                                            data={data}
-                                        />
-                                    )
-                                    // data.map((stream, id) => {
-                                    //     return (<h1>{stream}</h1>)
-                                    // })
-                                }
-                            })
+                    <div className='flex flex-col space-y-3 h-full flex-grow mt-1 overflow-y-auto scrollbar-hide'>
 
-                        // stream?.docs.map((doc) => {
-                        //     return (
-                        //         <ServerIcon
-                        //             image={doc.data()?.streamDisplayImage}
-                        //             id={doc.id}
-                        //             key={doc.id}
-                        //             name={doc.data().streamName}
-                        //         />
-                        //     )
-                        // })
-                    }
-
-
-                    <div className='text-center cursor-pointer'>
-                        <Tooltip
-                            placement="left"
-                            TransitionComponent={Zoom}
-                            TransitionProps={{ timeout: 400 }}
-                            title="New Stream"
-                        >
-                            <AddIcon
-                                onClick={() => setOpenStreamModal(true)}
-                                style={{ fontSize: '30' }}
-                                className='bg-discord_serverBg rounded-full text-discord_purple hover:rounded-md hover:text-discord_green' />
-                        </Tooltip>
+                        {
+                            streamSubLoad ?
+                                <div className='flex flex-col justify-center items-center h-screen'>
+                                    <LoadScreen />
+                                </div>
+                                :
+                                // eslint-disable-next-line
+                                streamSubscriptionData?.docs.map((doc) => {
+                                    if (doc.id === user?.email || doc.id === userEmail) {
+                                        const data = doc.data().subscribedStreams
+                                        return (
+                                            <Streams
+                                                key={doc.id}
+                                                data={data}
+                                            />
+                                        )
+                                    }
+                                })
+                        }
+                    </div>
+                    <div className='flex flex-col gap-2 items-center justify-between p-2'>
+                        <div className='text-center cursor-pointer'>
+                            <Tooltip
+                                placement="left"
+                                TransitionComponent={Zoom}
+                                TransitionProps={{ timeout: 400 }}
+                                title="New Stream"
+                            >
+                                <AddIcon
+                                    onClick={() => setOpenStreamModal(true)}
+                                    style={{ fontSize: '30' }}
+                                    className='bg-discord_serverBg rounded-full text-discord_purple hover:rounded-md hover:text-discord_green' />
+                            </Tooltip>
+                        </div>
                     </div>
                 </div>
 
@@ -241,7 +234,7 @@ const Home = () => {
                             {
                                 !streamId ?
                                     <div>
-                                        Choose a room
+                                        Choose a channel
                                     </div>
                                     :
                                     loading ?

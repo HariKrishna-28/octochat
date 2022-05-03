@@ -57,7 +57,7 @@ const StreamSettings = () => {
                     :
                     <div
                         onClick={() => setExitPrompt(true)}
-                        className='text-discord_channel hover:text-white p-1 cursor-pointer hover:bg-discord_channelHoverBg rounded-md'>
+                        className='text-discord_channel hover:text-white p-2 cursor-pointer hover:bg-discord_channelHoverBg rounded-md'>
                         <Tooltip
                             TransitionComponent={Zoom}
                             TransitionProps={{ timeout: 400 }}

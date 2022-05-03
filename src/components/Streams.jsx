@@ -7,9 +7,11 @@ const Streams = ({ data }) => {
     return (
         data.map((element, index) => {
             return (
-                <IndividualStreams
-                    key={index}
-                    id={element} />
+                <>
+                    <IndividualStreams
+                        key={index}
+                        id={element} />
+                </>
             )
         })
     )
