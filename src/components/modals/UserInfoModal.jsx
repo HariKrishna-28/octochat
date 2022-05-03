@@ -10,6 +10,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { Badge } from '@mui/material';
 
 
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -24,7 +25,6 @@ const style = {
 
 const UserInfoModal = ({ handleClose, open }) => {
     const [user, userLoad] = useAuthState(auth)
-
 
 
     return (
