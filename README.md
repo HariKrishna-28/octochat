@@ -1,6 +1,6 @@
 <div align = "center">
 
-# [OctoChat](https://octochat.netlify.app)
+# [OctoChat](https://octochat.vercel.app/)
 
 > ### _Whether you’re part of a school club, gaming group, worldwide art community, or just a handful of friends that want to spend time together, OctoChat makes it easy to talk every day and hang out more often. In OctoChat users communicate with text messaging as part of communities called "streams" or under a specific channel under a stream._
 
@@ -48,6 +48,6 @@
 
 <br>
 
-## Find the app [here](https://octochat.netlify.app/).
+## Find the app [here](https://octochat.vercel.app/).
 
 <br>
