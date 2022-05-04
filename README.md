@@ -4,10 +4,6 @@
 
 > ### _Whether you’re part of a school club, gaming group, worldwide art community, or just a handful of friends that want to spend time together, OctoChat makes it easy to talk every day and hang out more often. In OctoChat users communicate with text messaging as part of communities called "streams" or under a specific channel under a stream._
 
-<br>
-
-### Netlify Site Status : [![Netlify Status](https://api.netlify.com/api/v1/badges/86155a6a-8e59-42b2-9fd0-aeb5e2982fb6/deploy-status)](https://app.netlify.com/sites/octochat/deploys)
-
 </div>
 <br>
 
