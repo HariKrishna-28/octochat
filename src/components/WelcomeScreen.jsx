@@ -68,11 +68,11 @@ const WelcomeScreen = () => {
                     className='font-bold text-xl lg:text-3xl text-center'>
                     Octochat
                 </h1>
-
                 {!loading &&
-                    <div className='flex justify-between gap-5'>
+                    <div className='hidden lg:flex justify-between gap-5'>
                         <button
-                            className='bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded'
+
+                            className='w-36 bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded'
                             onClick={(event) => !user ? signIn(event) : navigator("streams")}
                         >
                             {user ? "Go to Streams" : "Login"}
@@ -80,13 +80,14 @@ const WelcomeScreen = () => {
 
                         {user &&
                             <button
-                                className='bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded'
+                                className='w-36 bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded'
                                 onClick={(event) => signOut(event)}
                             >
                                 Sign Out
                             </button>}
                     </div>
                 }
+
             </div>
             <div className='font-semibold p-5'
             >
@@ -113,7 +114,27 @@ const WelcomeScreen = () => {
                     together, OctoChat makes it easy to talk every day and hang out more
                     often.
                 </h2>
+                {!loading &&
+                    <div className='flex lg:hidden justify-between gap-5'>
+                        <button
+
+                            className='w-36 bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded'
+                            onClick={(event) => !user ? signIn(event) : navigator("streams")}
+                        >
+                            {user ? "Go to Streams" : "Login"}
+                        </button>
+
+                        {user &&
+                            <button
+                                className='w-36 bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded'
+                                onClick={(event) => signOut(event)}
+                            >
+                                Sign Out
+                            </button>}
+                    </div>
+                }
             </div>
+
         </div>
     )
 }

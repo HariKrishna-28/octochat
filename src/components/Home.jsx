@@ -139,7 +139,7 @@ const Home = () => {
                                 title="Home"
                             >
                                 <div
-                                    style={{ width: "60px" }}
+                                    style={{ width: "56px" }}
                                     className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2 text-center'>
                                     <HomeIcon
                                         className='h-6 hover:text-white'
