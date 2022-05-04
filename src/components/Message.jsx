@@ -5,8 +5,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from '../firebase';
 import { selectChannelId } from '../features/channelSlice';
 import { useSelector } from 'react-redux';
-// import { Tooltip } from '@mui/material';
-// import Zoom from '@mui/material/Zoom';
+import { Tooltip } from '@mui/material';
+import Zoom from '@mui/material/Zoom';
 
 
 const Message = ({ id, message, timeStamp, name, email, photoURL }) => {
@@ -14,7 +14,7 @@ const Message = ({ id, message, timeStamp, name, email, photoURL }) => {
     const channelId = useSelector(selectChannelId)
 
     return (
-        <div className='flex items-center p-1 pl-5 my-5 mr-2 hover:bg-discord_messageBg group'>
+        <div className='flex items-center p-1 pl-5 my-3 mr-2 hover:bg-discord_messageBg group'>
             <img
                 draggable="false"
                 src={photoURL}
@@ -48,13 +48,14 @@ const Message = ({ id, message, timeStamp, name, email, photoURL }) => {
                         }
                     }
                     }
-                    className='hover:bg-discord_deleteBg p-1 ml-auto hidden rounded-sm group-hover:inline cursor-pointer'>
-                    {/* <Tooltip
+                    className='hover:bg-discord_deleteBg p-1 ml-auto mr-2 hidden rounded-sm group-hover:inline cursor-pointer'>
+                    <Tooltip
+                        placement="left"
                         TransitionComponent={Zoom}
                         TransitionProps={{ timeout: 400 }}
-                        title="Delete"> */}
-                    <DeleteIcon className='h-5 cursor-pointer text-discord_deleteBg group-hover:text-white' />
-                    {/* </Tooltip> */}
+                        title="Delete Message">
+                        <DeleteIcon className='h-5 cursor-pointer text-discord_deleteBg group-hover:text-white' />
+                    </Tooltip>
                 </div>
             )
             }

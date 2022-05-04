@@ -116,7 +116,7 @@ const NewStreamModal = ({ handleClose, open }) => {
                                 <button
                                     className='hover:bg-discord_serverBg bg-discord_purple text-white p-2 rounded hover:rounded-md font-semibold'
                                     type='submit '>
-                                    submit
+                                    Create Stream
                                 </button>}
                         </div>
 

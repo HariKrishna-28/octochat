@@ -69,7 +69,7 @@ const NewChannelModal = ({ handleClose, open, handleAddChannel }) => {
                                 <button
                                     className='hover:bg-discord_serverBg bg-discord_purple text-white p-2 rounded hover:rounded-md font-semibold'
                                     type='submit '>
-                                    Crerate
+                                    Create Channel
                                 </button>}
                         </div>
 
