@@ -29,9 +29,21 @@ const Message = ({ id, message, timeStamp, name, email, photoURL }) => {
                         className='text-discord_chatHeader text-xs'
                     >{moment(timeStamp?.toDate().getTime()).format("lll")}</span>
                 </h4>
-                <p className='text-sm text-discord_chatINputText'>
-                    {message}
-                </p>
+                {
+                    message.slice(0, 77) === "https://firebasestorage.googleapis.com/v0/b/octochat2801.appspot.com/o/images" ?
+                        <img
+                            style={{ width: "150px", padding: "10px", borderRadius: "20px" }}
+                            draggable="false"
+                            src={message}
+                            alt="user"
+                        />
+
+                        :
+                        <p className='text-sm text-discord_chatINputText'>
+                            {message}
+                        </p>
+
+                }
             </div>
             {user.email === email && (
                 <div
