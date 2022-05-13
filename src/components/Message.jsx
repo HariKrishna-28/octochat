@@ -9,7 +9,7 @@ import { Tooltip } from '@mui/material';
 import Zoom from '@mui/material/Zoom';
 
 
-const Message = ({ id, message, timeStamp, name, email, photoURL }) => {
+const Message = ({ id, message, timeStamp, name, email, photoURL, type }) => {
     const [user] = useAuthState(auth)
     const channelId = useSelector(selectChannelId)
 
@@ -30,7 +30,7 @@ const Message = ({ id, message, timeStamp, name, email, photoURL }) => {
                     >{moment(timeStamp?.toDate().getTime()).format("lll")}</span>
                 </h4>
                 {
-                    message.slice(0, 77) === "https://firebasestorage.googleapis.com/v0/b/octochat2801.appspot.com/o/images" ?
+                    type === "image" ?
                         <img
                             style={{ width: "150px", padding: "10px", borderRadius: "20px" }}
                             draggable="false"

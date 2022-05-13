@@ -52,6 +52,7 @@ const Chat = () => {
     const sendImage = (imageUrl) => {
         try {
             db.collection("streams").doc(channelId).collection("messages").add({
+                type: "image",
                 timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
                 message: imageUrl,
                 name: user?.displayName,
@@ -69,6 +70,7 @@ const Chat = () => {
         if (inputRef.current.value === "") return
         try {
             db.collection("streams").doc(channelId).collection("messages").add({
+                type: "message",
                 timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
                 message: inputRef.current.value,
                 name: user?.displayName,
@@ -144,6 +146,7 @@ const Chat = () => {
                 }
                 {messages?.docs.map((doc) => {
                     return <Message
+                        type={doc.data().type}
                         key={doc.id}
                         id={doc.id}
                         email={doc.data().email}
