@@ -23,6 +23,8 @@ const style = {
     p: 3,
 };
 
+
+
 const UserInfoModal = ({ handleClose, open }) => {
     const [user, userLoad] = useAuthState(auth)
 

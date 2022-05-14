@@ -9,7 +9,7 @@ import { Tooltip } from '@mui/material';
 import Zoom from '@mui/material/Zoom';
 
 
-const Message = ({ id, message, timeStamp, name, email, photoURL }) => {
+const Message = ({ id, message, timeStamp, name, email, photoURL, type }) => {
     const [user] = useAuthState(auth)
     const channelId = useSelector(selectChannelId)
 
@@ -29,9 +29,21 @@ const Message = ({ id, message, timeStamp, name, email, photoURL }) => {
                         className='text-discord_chatHeader text-xs'
                     >{moment(timeStamp?.toDate().getTime()).format("lll")}</span>
                 </h4>
-                <p className='text-sm text-discord_chatINputText'>
-                    {message}
-                </p>
+                {
+                    type === "image" ?
+                        <img
+                            style={{ width: "150px", padding: "10px", borderRadius: "20px" }}
+                            draggable="false"
+                            src={message}
+                            alt="user"
+                        />
+
+                        :
+                        <p className='text-sm text-discord_chatINputText'>
+                            {message}
+                        </p>
+
+                }
             </div>
             {user.email === email && (
                 <div

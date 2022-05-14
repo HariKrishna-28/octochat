@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import TagIcon from '@mui/icons-material/Tag';
 import { selectChannelId, selectChannelName } from '../features/channelSlice';
 import { useSelector } from 'react-redux';
@@ -15,6 +15,8 @@ import LoadScreen from './LoadScreen';
 import { selectStreamId } from '../features/streamSlice';
 import StreamInfo from './StreamInfo';
 import StreamSettings from './StreamSettings';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import ImageUploadModal from './modals/ImageUploadModal';
 
 
 const Chat = () => {
@@ -24,6 +26,7 @@ const Chat = () => {
     const chatRef = useRef(null)
     const [user] = useAuthState(auth)
     const streamId = useSelector(selectStreamId)
+    const [openUploadModal, setOpenUploadModal] = useState(false)
     // eslint-disable-next-line
     const [messages, loading, error] = useCollection(
         channelId &&
@@ -46,11 +49,28 @@ const Chat = () => {
         div.scrollTop = div.scrollHeight - div.clientHeight;
     }
 
+    const sendImage = (imageUrl) => {
+        try {
+            db.collection("streams").doc(channelId).collection("messages").add({
+                type: "image",
+                timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+                message: imageUrl,
+                name: user?.displayName,
+                photoURL: user?.photoURL,
+                email: user?.email,
+            })
+        } catch (error) {
+            console.log(error)
+        }
+        MessageScroll()
+    }
+
     const sendMessage = (event) => {
         event.preventDefault()
         if (inputRef.current.value === "") return
         try {
             db.collection("streams").doc(channelId).collection("messages").add({
+                type: "message",
                 timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
                 message: inputRef.current.value,
                 name: user?.displayName,
@@ -63,6 +83,11 @@ const Chat = () => {
 
         inputRef.current.value = ""
         MessageScroll()
+    }
+
+    const handleUpload = () => {
+        // console.log("hi")
+        setOpenUploadModal(true)
     }
 
     const justifyHeader = !channelId ? "justify-end" : "justify-between"
@@ -121,6 +146,7 @@ const Chat = () => {
                 }
                 {messages?.docs.map((doc) => {
                     return <Message
+                        type={doc.data().type}
                         key={doc.id}
                         id={doc.id}
                         email={doc.data().email}
@@ -139,15 +165,37 @@ const Chat = () => {
                 <form
                     className='flex-grow'
                     onSubmit={(e) => sendMessage(e)}>
-                    <input
-                        type="text"
-                        ref={inputRef}
-                        disabled={!channelId}
-                        placeholder={channelId ? `Message #${channelName}` : "Select a channel"}
-                        className='bg-transparent focus:outline-none text-discord_chatINputText w-full placeholder:divide-discord_chatINputText text-sm'
-                    />
+                    <div className='flex '>
+                        <input
+                            type="text"
+                            ref={inputRef}
+                            disabled={!channelId}
+                            placeholder={channelId ? `Message #${channelName}` : "Select a channel"}
+                            className='bg-transparent focus:outline-none text-discord_chatINputText w-full placeholder:divide-discord_chatINputText text-sm'
+                        />
+                        {channelId &&
+                            <div
+                                onClick={handleUpload}
+                                className='text-discord_channel hover:text-white cursor-pointer hover:bg-discord_channelHoverBg rounded-md'>
+                                <Tooltip
+                                    TransitionComponent={Zoom}
+                                    TransitionProps={{ timeout: 400 }}
+                                    title="Attach images"
+                                >
+                                    <AttachFileIcon style={{ width: "20px" }} />
+                                </Tooltip>
+
+                            </div>}
+                    </div>
                 </form>
             </div>
+            <ImageUploadModal
+                exportUrl={(url) => {
+                    sendImage(url)
+                }}
+                open={openUploadModal}
+                handleClose={() => setOpenUploadModal(false)}
+            />
         </div>
     )
 }
