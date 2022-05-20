@@ -6,6 +6,7 @@ import { Alert } from '@mui/material';
 import { storage } from '../../firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { v4 as uuid } from 'uuid';
+import { User } from '@auth0/auth0-react';
 
 
 
@@ -25,32 +26,40 @@ const style = {
 const ImageUploadModal = ({ handleClose, open, exportUrl }) => {
     // const storage = getStorage(app);
     const [selectedFile, setSelectedFile] = useState(undefined)
-    const [error, setError] = useState(false)
+    const [error, setError] = useState("")
     const [upload, setUpload] = useState(false)
 
     const handleSubmit = async (event) => {
         setUpload(true)
         event.preventDefault()
-        const id = `images/${uuid().slice(0, 10)}`
+        console.log(selectedFile)
+        const id = `images/${uuid().slice(0, 10)}/${User}`
         const imageRef = ref(storage, id)
         await uploadBytes(imageRef, selectedFile)
             .then(() => {
                 getDownloadURL(imageRef)
                     .then((url) => exportUrl(url))
             }).catch(err => {
-                console.log(err.message)
+                setError(err.message)
+                // console.log(err.message)
             })
         setUpload(false)
         handleClose()
     }
 
     const handleChange = (e) => {
-        setError(false)
+        setError("")
         const file = e.target.files ? e.target.files[0] : undefined;
-        if (file.type.split("/")[0] === "image")
-            setSelectedFile(file);
+        console.log(file)
+        if (file.type.split("/")[0] === "image") {
+            if (file.size > 3000000) {
+                setError("Please upload files lesser than 3 MB")
+            } else {
+                setSelectedFile(file);
+            }
+        }
         else {
-            setError(true)
+            setError("Please upload only images")
             setSelectedFile(undefined)
         }
 
@@ -60,7 +69,7 @@ const ImageUploadModal = ({ handleClose, open, exportUrl }) => {
         <Modal
             open={open}
             onClose={() => {
-                setError(false)
+                setError("")
                 handleClose()
             }}
             aria-labelledby="modal-modal-title"
@@ -77,7 +86,7 @@ const ImageUploadModal = ({ handleClose, open, exportUrl }) => {
                     <button
                         className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2'
                         onClick={() => {
-                            setError(false)
+                            setError("")
                             handleClose()
                         }}
                     >
@@ -86,10 +95,10 @@ const ImageUploadModal = ({ handleClose, open, exportUrl }) => {
                 </div>
 
                 <div>
-                    {error &&
+                    {error !== "" &&
                         <Alert variant="filled" severity="error" >
                             <strong>
-                                Please add only image of jpeg format
+                                {error}
                             </strong>
                         </Alert>
                     }
@@ -113,7 +122,24 @@ const ImageUploadModal = ({ handleClose, open, exportUrl }) => {
                         </div>
 
                         <div className='text-center'>
-                            {!error && !upload ?
+                            {
+                                error !== "" ?
+                                    <div className='font-bold'>
+                                        {error}
+                                    </div>
+                                    : !upload ?
+                                        <button
+                                            className='hover:bg-discord_serverBg bg-discord_purple text-white p-2 rounded hover:rounded-md font-semibold'
+                                            type='submit '>
+                                            Upload
+                                        </button> :
+                                        <div className='font-bold'>
+                                            Uploading
+                                        </div>
+
+                            }
+
+                            {/* {!upload ?
                                 <button
                                     className='hover:bg-discord_serverBg bg-discord_purple text-white p-2 rounded hover:rounded-md font-semibold'
                                     type='submit '>
@@ -122,7 +148,7 @@ const ImageUploadModal = ({ handleClose, open, exportUrl }) => {
                                 <div className='font-bold'>
                                     Uploading
                                 </div>
-                            }
+                            } */}
                         </div>
 
                     </form>
