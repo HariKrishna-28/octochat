@@ -32,7 +32,7 @@ const ImageUploadModal = ({ handleClose, open, exportUrl }) => {
         setUpload(true)
         event.preventDefault()
         console.log(selectedFile)
-        const id = `images/${uuid().slice(0, 10)}/${User}`
+        const id = `images/${uuid().slice(0, 10)}`
         const imageRef = ref(storage, id)
         await uploadBytes(imageRef, selectedFile)
             .then(() => {
