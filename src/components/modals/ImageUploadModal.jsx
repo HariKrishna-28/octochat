@@ -6,7 +6,6 @@ import { Alert } from '@mui/material';
 import { storage } from '../../firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { v4 as uuid } from 'uuid';
-import { User } from '@auth0/auth0-react';
 
 
 
