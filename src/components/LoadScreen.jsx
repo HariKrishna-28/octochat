@@ -1,8 +1,9 @@
 import React from 'react'
-import { ScaleLoader } from 'react-spinners'
+import { CircularProgress } from '@mui/material';
+
 
 const LoadScreen = () => {
-    return (<ScaleLoader color={"#5865f2"} />)
+    return (<CircularProgress size="30px" />)
 }
 
 export default LoadScreen
