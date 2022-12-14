@@ -7,11 +7,14 @@ import { selectChannelId } from '../features/channelSlice';
 import { useSelector } from 'react-redux';
 import { Tooltip } from '@mui/material';
 import Zoom from '@mui/material/Zoom';
+import { useState } from 'react';
+import LoadScreen from './LoadScreen';
 
 
 const Message = ({ id, message, timeStamp, name, email, photoURL, type }) => {
     const [user] = useAuthState(auth)
     const channelId = useSelector(selectChannelId)
+    const [load, setLoad] = useState(false)
 
     return (
         <div className='flex items-center p-1 pl-5 my-3 mr-2 hover:bg-discord_messageBg group'>
@@ -31,12 +34,22 @@ const Message = ({ id, message, timeStamp, name, email, photoURL, type }) => {
                 </h4>
                 {
                     type === "image" ?
-                        <img
-                            style={{ width: "150px", padding: "10px", borderRadius: "20px" }}
-                            draggable="false"
-                            src={message}
-                            alt="user"
-                        />
+                        <>
+                            <img
+                                onLoad={() => setLoad(true)}
+                                style={{ width: "150px", padding: "10px", borderRadius: "20px" }}
+                                draggable="false"
+                                src={message}
+                                alt="user"
+                                loading="lazy"
+
+                            />
+                            {
+                                !load &&
+                                <LoadScreen />
+                            }
+
+                        </>
 
                         :
                         <p className='text-sm text-discord_chatINputText'>
