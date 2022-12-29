@@ -101,7 +101,7 @@ const Chat = () => {
             <header className={`flex items-center ${justifyHeader} space-x-5 border-b border-gray-800 p-2`}>
                 {channelId && <div className='flex items-center space-x-1'>
                     <TagIcon className='h-6 text-discord_chatHeader' />
-                    <h4 className='text-white font-semibold'>{channelName}</h4>
+                    <h4 className='font-semibold text-white'>{channelName}</h4>
                 </div>}
 
                 <div className='flex items-center justify-center'>
@@ -113,7 +113,7 @@ const Chat = () => {
                     }
 
 
-                    <div className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2'>
+                    {/* <div className='p-2 rounded-md text-discord_channel hover:text-white hover:bg-discord_channelHoverBg'>
                         <a href="https://github.com/HariKrishna-28/octochat" target="_blank" rel="noopener noreferrer">
                             <Tooltip
                                 TransitionComponent={Zoom}
@@ -122,8 +122,8 @@ const Chat = () => {
                                 <GitHubIcon />
                             </Tooltip>
                         </a>
-                    </div>
-                    <div className='text-discord_channel hover:text-white hover:bg-discord_channelHoverBg rounded-md p-2 '>
+                    </div> */}
+                    <div className='p-2 rounded-md text-discord_channel hover:text-white hover:bg-discord_channelHoverBg '>
                         <LogOutButton />
                     </div>
                 </div>
@@ -171,12 +171,12 @@ const Chat = () => {
                             ref={inputRef}
                             disabled={!channelId}
                             placeholder={channelId ? `Message #${channelName}` : "Select a channel"}
-                            className='bg-transparent focus:outline-none text-discord_chatINputText w-full placeholder:divide-discord_chatINputText text-sm'
+                            className='w-full text-sm bg-transparent focus:outline-none text-discord_chatINputText placeholder:divide-discord_chatINputText'
                         />
                         {channelId &&
                             <div
                                 onClick={handleUpload}
-                                className='text-discord_channel hover:text-white cursor-pointer hover:bg-discord_channelHoverBg rounded-md'>
+                                className='rounded-md cursor-pointer text-discord_channel hover:text-white hover:bg-discord_channelHoverBg'>
                                 <Tooltip
                                     TransitionComponent={Zoom}
                                     TransitionProps={{ timeout: 400 }}

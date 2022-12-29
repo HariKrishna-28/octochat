@@ -18,6 +18,7 @@ const LogOutButton = () => {
             userId: null,
         }))
         await auth.signOut()
+        dispatch('/')
     }
 
     return (
